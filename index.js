@@ -1,3 +1,9 @@
+import { Limite } from "./classes/limite-class.js"
+import { Jogador } from "./classes/jogador-class.js"
+import { Bolinha } from "./classes/bolinha-class.js"
+import { Fantasma } from "./classes/fantasma-class.js"
+import { PowerUp } from "./classes/power-up-class.js"
+
 // definindo a area de jogo
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
@@ -9,116 +15,10 @@ const resultado = document.getElementById('Result');
 // canvas.width = window.innerWidth;
 // canvas.height = window.innerHeight;
 
-// classe limite: define as bordas do mapa;
-
-class Limite{
-    static width = 40;
-    static height = 40;
-    constructor({position, image}){
-        this.position = position;
-        this.width = 40;
-        this.height = 40;
-        this.image = image;
-    }
-
-    draw() {
-        // ctx.fillStyle = 'blue';
-        // ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
-        ctx.drawImage(this.image,this.position.x, this.position.y)
-    }
-}
-// classe que define o pacman
-class Jogador {
-    constructor({position,velocity}){
-        this.position = position;
-        this.velocity = velocity;
-        this.radius = 15;
-        this.radians = 0.75; 
-        this.openRate = 0.12;
-        this.rotate = 0;
-    }
-    
-    drawp(){
-        ctx.save();
-        ctx.translate(this.position.x, this.position.y)
-        ctx.rotate(this.rotate);
-        ctx.translate(-this.position.x, -this.position.y)
-        ctx.beginPath();
-        ctx.arc(this.position.x, this.position.y, this.radius, this.radians , Math.PI*2 - this.radians);
-        ctx.lineTo(this.position.x, this.position.y);
-        ctx.fillStyle = 'yellow';
-        ctx.fill();
-        ctx.closePath()
-        ctx.restore();
-    }
-    update(){
-        this.drawp();
-        this.position.x += this.velocity.x;
-        this.position.y += this.velocity.y;
-
-        if( this.radians < 0 || this.radians > .75) this.openRate = -this.openRate;
-        this.radians += this.openRate;
-}
-}
-
-class Bolinha {
-    constructor({position}){
-        this.position = position;
-        this.radius = 3;
-    }
-
-    draw(){
-        ctx.beginPath();
-        ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI*2);
-        ctx.fillStyle = 'white';
-        ctx.fill();
-        ctx.closePath();
-    }
-}
-
-class Fantasma {
-    static speed = 2;
-    constructor({position,velocity, color = 'red' }){
-        this.position = position;
-        this.velocity = velocity;
-        this.radius = 15;
-        this.color = color;
-        this.colisoesprevias = [];
-        this.speed = 2;
-        this.assutado = false;
-    }
-    
-    drawg(){
-        ctx.beginPath();
-        ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI*2);
-        ctx.fillStyle = this.assutado ? 'blue' : this.color;
-        ctx.fill();
-        ctx.closePath();
-    }
-    update(){
-        this.drawg();
-        this.position.x += this.velocity.x;
-        this.position.y += this.velocity.y;
-    }
-}
-
-class PowerUp {
-    constructor({position}){
-        this.position = position;
-        this.radius = 10;
-    }
-
-    draw(){
-        ctx.beginPath();
-        ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI*2);
-        ctx.fillStyle = 'green';
-        ctx.fill();
-        ctx.closePath();
-    }
-}
 const bolinhas = [];
 const limites = [];
 const powerUps = [];
+
 //fazer função criar fantasma
 const fantasmas = [
     new Fantasma({
@@ -129,7 +29,8 @@ const fantasmas = [
         velocity: {
             x: Fantasma.speed,
             y:0
-        }
+        },
+        ctx: ctx
     }),
     new Fantasma({
         position:{
@@ -140,7 +41,8 @@ const fantasmas = [
             x: Fantasma.speed,
             y:0
         },
-        color:'purple'
+        color:'purple',
+        ctx: ctx
     }),
     new Fantasma({
         position:{
@@ -151,7 +53,8 @@ const fantasmas = [
             x: Fantasma.speed,
             y:0
         },
-        color:'white'
+        color:'white',
+        ctx: ctx
     })
 ];
 const player = new Jogador ({
@@ -162,7 +65,8 @@ const player = new Jogador ({
     velocity:{
         x:0,
         y:0
-    }
+    },
+    ctx: ctx
 })
 const keys = {
     w: { 
@@ -210,100 +114,116 @@ mapa.forEach((row,i) =>{
             case '-':
                 limites.push(new Limite({
                     position:{x:Limite.width * j, y: Limite.height * i},
-                    image:criarImagem('./img/pipeHorizontal.png')
+                    image:criarImagem('./img/pipeHorizontal.png'),
+                    ctx: ctx
                 }))
                 break;
             case '|':
                 limites.push(new Limite({
                     position:{x:Limite.width * j, y: Limite.height * i},
-                    image: criarImagem('./img/pipeVertical.png')
+                    image: criarImagem('./img/pipeVertical.png'),
+                    ctx: ctx
                 }))
                 break;
             case 'c1':
                 limites.push(new Limite({
                     position:{x:Limite.width * j, y: Limite.height * i},
-                    image: criarImagem('./img/pipeCorner1.png')
+                    image: criarImagem('./img/pipeCorner1.png'),
+                    ctx: ctx
                 }))
                 break;
             case 'c2':
                 limites.push(new Limite({
                     position:{x:Limite.width * j, y: Limite.height * i},
-                    image: criarImagem('./img/pipeCorner2.png')
+                    image: criarImagem('./img/pipeCorner2.png'),
+                    ctx: ctx
                 }))
                 break;
             case 'c3':
                 limites.push(new Limite({
                     position:{x:Limite.width * j, y: Limite.height * i},
-                    image: criarImagem('./img/pipeCorner3.png')
+                    image: criarImagem('./img/pipeCorner3.png'),
+                    ctx: ctx
                 }))
                 break;
             case 'c4':
                 limites.push(new Limite({
                     position:{x:Limite.width * j, y: Limite.height * i},
-                    image: criarImagem('./img/pipeCorner4.png')
+                    image: criarImagem('./img/pipeCorner4.png'),
+                    ctx: ctx
                 }))
                 break;
             case 'blk':
                 limites.push(new Limite({
                     position:{x:Limite.width * j, y: Limite.height * i},
-                    image: criarImagem('./img/block.png')
+                    image: criarImagem('./img/block.png'),
+                    ctx: ctx
                 }))
                 break;
             case '[':
                 limites.push(new Limite({
                     position: {x: j * Limite.width, y: i * Limite.height},
-                    image: criarImagem('./img/capLeft.png')
+                    image: criarImagem('./img/capLeft.png'),
+                    ctx: ctx
                 }))
                 break;
             case ']':
                 limites.push(new Limite({
                     position:{x: j * Limite.width, y: i * Limite.height},
-                    image: criarImagem('./img/capRight.png')
+                    image: criarImagem('./img/capRight.png'),
+                    ctx: ctx
                 }))
                 break;
             case '_':
                 limites.push(new Limite({
                     position: {x: j * Limite.width,y: i * Limite.height},
-                    image: criarImagem('./img/capBottom.png')
+                    image: criarImagem('./img/capBottom.png'),
+                    ctx: ctx
                 }))
                 break;
             case '^':
                 limites.push(new Limite({
                     position: {x: j * Limite.width,y: i * Limite.height},
-                    image: criarImagem('./img/capTop.png')
+                    image: criarImagem('./img/capTop.png'),
+                    ctx: ctx
                 }))
                 break;
             case '+':
                 limites.push(new Limite({
                     position: {x: j * Limite.width,y: i * Limite.height},
-                    image: criarImagem('./img/pipeCross.png')
+                    image: criarImagem('./img/pipeCross.png'),
+                    ctx: ctx
                 }))
                 break;
             case '5':
                 limites.push(new Limite({
                     position: {x: j * Limite.width,y: i * Limite.height},
                     color: 'blue',
-                    image: criarImagem('./img/pipeConnectorTop.png')
+                    image: criarImagem('./img/pipeConnectorTop.png'),
+                    ctx: ctx
                 }))
                 break;
             case '6':
                 limites.push(new Limite({
                     position: {x: j * Limite.width,y: i * Limite.height},
                     color: 'blue',
-                    image: criarImagem('./img/pipeConnectorRight.png')
+                    image: criarImagem('./img/pipeConnectorRight.png'),
+                    ctx: ctx
                     }))
                 break;
             case '7':
                 limites.push(new Limite({
                     position: {x: j * Limite.width,y: i * Limite.height},
                     color: 'blue',
-                    image: criarImagem('./img/pipeConnectorBottom.png')
+                    image: criarImagem('./img/pipeConnectorBottom.png'),
+                    ctx: ctx
                 }))
                 break;
             case '8':
                 limites.push(new Limite({
                     position: {x: j * Limite.width,y: i * Limite.height},
-                    image: criarImagem('./img/pipeConnectorLeft.png')
+                    image: criarImagem('./img/pipeConnectorLeft.png'),
+                    ctx: ctx
                 }))
                 break;
             case '.':
@@ -311,16 +231,18 @@ mapa.forEach((row,i) =>{
                     position: {
                         x: j * Limite.width + Limite.width / 2,
                         y: i * Limite.height + Limite.height / 2
-                        }
-                    }))
+                    },
+                    ctx: ctx
+                }))
                 break;
             case 'p':
                 powerUps.push(new PowerUp({
                     position: {
                         x: j * Limite.width + Limite.width / 2,
                         y: i * Limite.height + Limite.height / 2
-                        }
-                    }))
+                    },
+                    ctx: ctx
+                }))
                 break;
         }
     })
