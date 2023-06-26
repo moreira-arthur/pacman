@@ -3,7 +3,7 @@ import { Jogador } from "./classes/jogador-class.js"
 import { Bolinha } from "./classes/bolinha-class.js"
 import { Fantasma } from "./classes/fantasma-class.js"
 import { PowerUp } from "./classes/power-up-class.js"
-import { lastkey, keys, setupInput } from "./input-handler.js"
+import { InputHandler } from "./input-handler.js"
 import circleCollidesWithRectangle from "./circle-collision.js"
 
 // definindo a area de jogo
@@ -238,13 +238,15 @@ mapa.forEach((row,i) =>{
 })
 
 let animacaoId;
+
+let inputHandler = new InputHandler();
 // funcao que fica em looping infito fazendo com que o player se mova
 function animacao(){
     animacaoId = requestAnimationFrame(animacao);
     // console.log(animacaoId);
     ctx.clearRect(0,0,canvas.width, canvas.height)
  // fazendo com que o player se movimente suavemente, e com colisão aos limites
-    if (keys.w.pressed && lastkey === 'w'){
+    if (inputHandler.keys.w.pressed && inputHandler.lastkey === 'w'){
         for(let i = 0; i < limites.length; i++){
             const limite = limites[i];
             if(circleCollidesWithRectangle({
@@ -260,7 +262,7 @@ function animacao(){
                 player.velocity.y = -5;
             }
         }
-    } else if (keys.a.pressed && lastkey === 'a'){
+    } else if (inputHandler.keys.a.pressed && inputHandler.lastkey === 'a'){
         for(let i = 0; i <limites.length; i++){
             const limite = limites[i];
             if(circleCollidesWithRectangle({
@@ -276,7 +278,7 @@ function animacao(){
                 player.velocity.x = -5;
             }
         }
-    } else if (keys.s.pressed && lastkey === 's'){
+    } else if (inputHandler.keys.s.pressed && inputHandler.lastkey === 's'){
         for(let i = 0; i <limites.length; i++){
             const limite = limites[i];
             if(circleCollidesWithRectangle({
@@ -292,7 +294,7 @@ function animacao(){
                 player.velocity.y = 5;
             }
         }
-    } else if (keys.d.pressed && lastkey === 'd'){
+    } else if (inputHandler.keys.d.pressed && inputHandler.lastkey === 'd'){
         for(let i = 0; i <limites.length; i++){
             const limite = limites[i];
             if(circleCollidesWithRectangle({
@@ -499,5 +501,3 @@ function animacao(){
 
 
 animacao()
-
-setupInput()
