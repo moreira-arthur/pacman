@@ -7,7 +7,7 @@ import { circleCollidesWithRectangle, circleCollidesWithCircle } from "./circle-
 
 // definindo a area de jogo
 const canvas = document.querySelector('canvas');
-const ctx = canvas.getContext('2d');
+globalThis.ctx = canvas.getContext('2d');
 
 const scoreEl = document.getElementById('scoreEl');
 const resultado = document.getElementById('Result');
@@ -26,8 +26,7 @@ const fantasmas = [
         velocity: {
             x: Fantasma.speed,
             y:0
-        },
-        ctx: ctx
+        }
     }),
     new Fantasma({
         position:{
@@ -38,8 +37,7 @@ const fantasmas = [
             x: Fantasma.speed,
             y:0
         },
-        color:'purple',
-        ctx: ctx
+        color:'purple'
     }),
     new Fantasma({
         position:{
@@ -50,8 +48,7 @@ const fantasmas = [
             x: Fantasma.speed,
             y:0
         },
-        color:'white',
-        ctx: ctx
+        color:'white'
     })
 ];
 const player = new Jogador ({
@@ -59,7 +56,6 @@ const player = new Jogador ({
         x:Limite.width + Limite.width/2,
         y:Limite.height + Limite.height/2
     },
-    ctx: ctx,
     velocity:{
         x:0,
         y:0
@@ -68,9 +64,7 @@ const player = new Jogador ({
 
 let score = 0;
 
-let mapa = new Mapa({
-    ctx: ctx
-});
+globalThis.mapa = new Mapa();
 
 let animacaoId;
 
@@ -83,71 +77,71 @@ function animacao(){
     ctx.clearRect(0,0,canvas.width, canvas.height);
 
     // fazendo com que o player se movimente suavemente, e com colisão aos limites
-    if (inputHandler.keys.w.pressed && inputHandler.lastkey === 'w'){
-        for(let i = 0; i < mapa.limites.length; i++){
-            const limite = mapa.limites[i];
-            if(circleCollidesWithRectangle({
-                circle: {...player,velocity:{
-                    x: 0,
-                    y: -5
-                }},
-                rectangle: limite
-            })){
-                player.velocity.y = 0;
-                break;
-            }else{
-                player.velocity.y = -5;
-            }
-        }
-    } else if (inputHandler.keys.a.pressed && inputHandler.lastkey === 'a'){
-        for(let i = 0; i < mapa.limites.length; i++){
-            const limite = mapa.limites[i];
-            if(circleCollidesWithRectangle({
-                circle: {...player,velocity:{
-                    x: -5,
-                    y: 0
-                }},
-                rectangle: limite
-            })){
-                player.velocity.x = 0;
-                break;
-            }else{
-                player.velocity.x = -5;
-            }
-        }
-    } else if (inputHandler.keys.s.pressed && inputHandler.lastkey === 's'){
-        for(let i = 0; i < mapa.limites.length; i++){
-            const limite = mapa.limites[i];
-            if(circleCollidesWithRectangle({
-                circle: {...player,velocity:{
-                    x: 0,
-                    y: 5
-                }},
-                rectangle: limite
-            })){
-                player.velocity.y = 0;
-                break;
-            }else{
-                player.velocity.y = 5;
-            }
-        }
-    } else if (inputHandler.keys.d.pressed && inputHandler.lastkey === 'd'){
-        for(let i = 0; i < mapa.limites.length; i++){
-            const limite = mapa.limites[i];
-            if(circleCollidesWithRectangle({
-                circle: {...player,velocity:{
-                    x: 5,
-                    y: 0
-                }},
-                rectangle: limite
-            })){
-                player.velocity.x = 0;
-                break;
-            }else{
-                player.velocity.x = 5;
-            }
-        }
-    }
+    // if (inputHandler.keys.w.pressed && inputHandler.lastkey === 'w'){
+    //     for(let i = 0; i < mapa.limites.length; i++){
+    //         const limite = mapa.limites[i];
+    //         if(circleCollidesWithRectangle({
+    //             circle: {...player,velocity:{
+    //                 x: 0,
+    //                 y: -5
+    //             }},
+    //             rectangle: limite
+    //         })){
+    //             player.velocity.y = 0;
+    //             break;
+    //         }else{
+    //             player.velocity.y = -5;
+    //         }
+    //     }
+    // } else if (inputHandler.keys.a.pressed && inputHandler.lastkey === 'a'){
+    //     for(let i = 0; i < mapa.limites.length; i++){
+    //         const limite = mapa.limites[i];
+    //         if(circleCollidesWithRectangle({
+    //             circle: {...player,velocity:{
+    //                 x: -5,
+    //                 y: 0
+    //             }},
+    //             rectangle: limite
+    //         })){
+    //             player.velocity.x = 0;
+    //             break;
+    //         }else{
+    //             player.velocity.x = -5;
+    //         }
+    //     }
+    // } else if (inputHandler.keys.s.pressed && inputHandler.lastkey === 's'){
+    //     for(let i = 0; i < mapa.limites.length; i++){
+    //         const limite = mapa.limites[i];
+    //         if(circleCollidesWithRectangle({
+    //             circle: {...player,velocity:{
+    //                 x: 0,
+    //                 y: 5
+    //             }},
+    //             rectangle: limite
+    //         })){
+    //             player.velocity.y = 0;
+    //             break;
+    //         }else{
+    //             player.velocity.y = 5;
+    //         }
+    //     }
+    // } else if (inputHandler.keys.d.pressed && inputHandler.lastkey === 'd'){
+    //     for(let i = 0; i < mapa.limites.length; i++){
+    //         const limite = mapa.limites[i];
+    //         if(circleCollidesWithRectangle({
+    //             circle: {...player,velocity:{
+    //                 x: 5,
+    //                 y: 0
+    //             }},
+    //             rectangle: limite
+    //         })){
+    //             player.velocity.x = 0;
+    //             break;
+    //         }else{
+    //             player.velocity.x = 5;
+    //         }
+    //     }
+    // }
     //detecta colisao entre fantasmas e o player
     for(let i = fantasmas.length - 1; i >= 0; i--){
         const fantasma = fantasmas[i];

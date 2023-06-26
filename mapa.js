@@ -11,10 +11,9 @@ function criarImagem(src){
 export class Limite extends GameObject{
     static width = 40;
     static height = 40;
-    constructor({position, image, ctx}){
+    constructor({position, image}){
         super({
-            position: position,
-            ctx: ctx
+            position: position
         })
         this.width = 40;
         this.height = 40;
@@ -22,9 +21,7 @@ export class Limite extends GameObject{
     }
 
     draw() {
-        // ctx.fillStyle = 'blue';
-        // ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
-        this.ctx.drawImage(this.image,this.position.x, this.position.y)
+        globalThis.ctx.drawImage(this.image,this.position.x, this.position.y)
     }
     update(){
 
@@ -71,7 +68,7 @@ export class Mapa{
         '8': './img/pipeConnectorLeft.png'
     }
 
-    constructor({ctx}){
+    constructor(){
         this.#form.forEach((row,i) =>{
             row.forEach((simbolo,j) =>{
                 switch(simbolo){
@@ -93,8 +90,7 @@ export class Mapa{
                     case '8':
                         this.limites.push(new Limite({
                             position: {x: j * Limite.width,y: i * Limite.height},
-                            image: criarImagem(this.#paths[simbolo]),
-                            ctx: ctx
+                            image: criarImagem(this.#paths[simbolo])
                         }));
                         break;
                     case '.':
@@ -102,8 +98,7 @@ export class Mapa{
                             position: {
                                 x: j * Limite.width + Limite.width / 2,
                                 y: i * Limite.height + Limite.height / 2
-                            },
-                            ctx: ctx
+                            }
                         }))
                         break;
                     case 'p':
@@ -111,8 +106,7 @@ export class Mapa{
                             position: {
                                 x: j * Limite.width + Limite.width / 2,
                                 y: i * Limite.height + Limite.height / 2
-                            },
-                            ctx: ctx
+                            }
                         }))
                         break;
                 }

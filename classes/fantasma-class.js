@@ -2,10 +2,9 @@ import { GameObject } from "./game-obj.js";
 
 export class Fantasma extends GameObject{
     static speed = 2;
-    constructor({position,ctx,velocity, color = 'red'}){
+    constructor({position,velocity, color = 'red'}){
         super({
-            position: position,
-            ctx: ctx
+            position: position
         });
         this.velocity = velocity;
         this.radius = 15;
@@ -16,11 +15,11 @@ export class Fantasma extends GameObject{
     }
     
     drawg(){
-        this.ctx.beginPath();
-        this.ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI*2);
-        this.ctx.fillStyle = this.assutado ? 'blue' : this.color;
-        this.ctx.fill();
-        this.ctx.closePath();
+        globalThis.ctx.beginPath();
+        globalThis.ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI*2);
+        globalThis.ctx.fillStyle = this.assutado ? 'blue' : this.color;
+        globalThis.ctx.fill();
+        globalThis.ctx.closePath();
     }
     update(){
         this.drawg();
