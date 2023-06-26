@@ -61,7 +61,7 @@ globalThis.player = new Jogador ({
     }
 })
 
-let score = 0;
+globalThis.score = 0;
 
 globalThis.mapa = new Mapa();
 
@@ -94,7 +94,7 @@ function animacao(){
     }
 
     // condicao de ganhar fica aqui
-    if(mapa.bolinhas.length ===  1){
+    if(mapa.bolinhas.length ===  0){
         resultado.innerHTML = "Você Ganhou, PARABÉNS !!";
         resultado.style.color = 'green'; 
         console.log('You win');
@@ -102,28 +102,15 @@ function animacao(){
     }
     
     // Criação dos PowerUps
-    for(let i = mapa.powerUps.length - 1; i >= 0; i--){
-        const powerUp = mapa.powerUps[i];
-        powerUp.draw();
+    mapa.powerUps.forEach((powerUp) => {
         powerUp.update();
-    }
-    //toca as bolinhas aqui
-    for(let i = mapa.bolinhas.length - 1; i > 0; i--){
-        const bolinha = mapa.bolinhas[i];
+    })
+
+    mapa.bolinhas.forEach((bolinha) => {
         bolinha.draw();
-
-        if(circleCollidesWithCircle({
-            circle1: bolinha,
-            circle2: player
-        })){
-            // console.log("Tocando");
-            mapa.bolinhas.splice(i, 1); // retira a bolinha ao passar em cima
-            console.log(mapa.bolinhas.length)
-            score = score + 10;
-            scoreEl.innerHTML = score;
-        }
-    }
-
+        bolinha.update();
+    })
+    scoreEl.innerHTML = score;
     mapa.limites.forEach((limite) => {
         limite.draw();
     })

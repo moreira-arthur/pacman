@@ -17,11 +17,13 @@ export class PowerUp extends GameObject{
         ctx.closePath();
     }
     update(){
+        this.draw();
         if(circleCollidesWithCircle({
             circle1: this,
             circle2: player
         })){
-            mapa.powerUps.splice(mapa.powerUps.indexOf(this), 1); // retira a powerUp ao passar em cima
+            let index = mapa.powerUps.indexOf(this)
+            mapa.powerUps.splice(index, 1); // retira a powerUp ao passar em cima
             
              //fazer os fantasmas ficarem assustados
             fantasmas.forEach(fantasma => {

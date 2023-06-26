@@ -1,4 +1,5 @@
 import { GameObject } from "./game-obj.js";
+import { circleCollidesWithCircle } from "../circle-collision.js";
 
 export class Bolinha extends GameObject{
     constructor({position}){
@@ -16,6 +17,15 @@ export class Bolinha extends GameObject{
         ctx.closePath();
     }
     update(){
-
+        if(circleCollidesWithCircle({
+            circle1: this,
+            circle2: player
+        })){
+            // console.log("Tocando");
+            let index = mapa.bolinhas.indexOf(this);
+            mapa.bolinhas.splice(index, 1); // retira a bolinha ao passar em cima
+            console.log(mapa.bolinhas.length)
+            score += 10;
+        }
     }
 }
