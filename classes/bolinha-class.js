@@ -17,6 +17,7 @@ export class Bolinha extends GameObject{
         ctx.closePath();
     }
     update(){
+        this.draw();
         if(circleCollidesWithCircle({
             circle1: this,
             circle2: player
@@ -25,7 +26,7 @@ export class Bolinha extends GameObject{
             let index = mapa.bolinhas.indexOf(this);
             mapa.bolinhas.splice(index, 1); // retira a bolinha ao passar em cima
             console.log(mapa.bolinhas.length)
-            score += 10;
+            changeScore(10);
         }
     }
 }

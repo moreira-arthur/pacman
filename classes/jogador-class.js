@@ -64,8 +64,8 @@ export class Jogador extends GameObject{
     #setVel(){
         // fazendo com que o player se movimente suavemente, e com colisão aos limites
         if (this.#inputHandler.keys.w.pressed && this.#inputHandler.lastkey === 'w'){
-            for(let i = 0; i < globalThis.mapa.limites.length; i++){
-                const limite = globalThis.mapa.limites[i];
+            for(let i = 0; i < mapa.limites.length; i++){
+                const limite = mapa.limites[i];
                 if(circleCollidesWithRectangle({
                     circle: {...this,velocity:{
                         x: 0,
@@ -80,8 +80,8 @@ export class Jogador extends GameObject{
                 }
             }
         } else if (this.#inputHandler.keys.s.pressed && this.#inputHandler.lastkey === 's'){
-            for(let i = 0; i < globalThis.mapa.limites.length; i++){
-                const limite = globalThis.mapa.limites[i];
+            for(let i = 0; i < mapa.limites.length; i++){
+                const limite = mapa.limites[i];
                 if(circleCollidesWithRectangle({
                     circle: {...this,velocity:{
                         x: 0,
@@ -96,8 +96,8 @@ export class Jogador extends GameObject{
                 }
             }
         } else if (this.#inputHandler.keys.d.pressed && this.#inputHandler.lastkey === 'd'){
-            for(let i = 0; i < globalThis.mapa.limites.length; i++){
-                const limite = globalThis.mapa.limites[i];
+            for(let i = 0; i < mapa.limites.length; i++){
+                const limite = mapa.limites[i];
                 if(circleCollidesWithRectangle({
                     circle: {...this,velocity:{
                         x: 5,
@@ -112,8 +112,8 @@ export class Jogador extends GameObject{
                 }
             }
         } else if (this.#inputHandler.keys.a.pressed && this.#inputHandler.lastkey === 'a'){
-            for(let i = 0; i < globalThis.mapa.limites.length; i++){
-                const limite = globalThis.mapa.limites[i];
+            for(let i = 0; i < mapa.limites.length; i++){
+                const limite = mapa.limites[i];
                 if(circleCollidesWithRectangle({
                     circle: {...this,velocity:{
                         x: -5,

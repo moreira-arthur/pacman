@@ -116,14 +116,11 @@ export class Mapa{
     update(){
         this.limites.forEach((limite) => {
             limite.draw();
-            limite.update();
         });
         this.powerUps.forEach((powerUp) => {
-            powerUp.draw();
             powerUp.update();
         });
         this.bolinhas.forEach((bolinha) => {
-            bolinha.draw();
             bolinha.update();
         });
     }

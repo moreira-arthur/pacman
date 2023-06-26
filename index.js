@@ -61,7 +61,11 @@ globalThis.player = new Jogador ({
     }
 })
 
-globalThis.score = 0;
+let score = 0;
+globalThis.changeScore = (value) => {
+    score += value;
+    scoreEl.innerHTML = score;
+}
 
 globalThis.mapa = new Mapa();
 
@@ -92,7 +96,7 @@ function animacao(){
 
         }
     }
-
+    
     // condicao de ganhar fica aqui
     if(mapa.bolinhas.length ===  0){
         resultado.innerHTML = "Você Ganhou, PARABÉNS !!";
@@ -101,19 +105,7 @@ function animacao(){
         cancelAnimationFrame(animacaoId);
     }
     
-    // Criação dos PowerUps
-    mapa.powerUps.forEach((powerUp) => {
-        powerUp.update();
-    })
-
-    mapa.bolinhas.forEach((bolinha) => {
-        bolinha.draw();
-        bolinha.update();
-    })
-    scoreEl.innerHTML = score;
-    mapa.limites.forEach((limite) => {
-        limite.draw();
-    })
+    mapa.update();
 
     player.update();
 
