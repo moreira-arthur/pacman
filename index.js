@@ -15,7 +15,7 @@ const resultado = document.getElementById('Result');
 // canvas.height = window.innerHeight;
 
 //fazer função criar fantasma
-const fantasmas = [
+globalThis.fantasmas = [
     new Fantasma({
         position:{
             x:Limite.width*6 + Limite.width/2,
@@ -49,7 +49,8 @@ const fantasmas = [
         color:'white'
     })
 ];
-const player = new Jogador ({
+
+globalThis.player = new Jogador ({
     position: { 
         x:Limite.width + Limite.width/2,
         y:Limite.height + Limite.height/2
@@ -67,7 +68,6 @@ globalThis.mapa = new Mapa();
 let animacaoId;
 
 // funcao que fica em looping infito fazendo com que o player se mova
-
 function animacao(){
     animacaoId = requestAnimationFrame(animacao);
 
@@ -105,24 +105,7 @@ function animacao(){
     for(let i = mapa.powerUps.length - 1; i >= 0; i--){
         const powerUp = mapa.powerUps[i];
         powerUp.draw();
-        // player coleta o powerup
-        if(circleCollidesWithCircle({
-            circle1: powerUp,
-            circle2: player
-        })){
-            mapa.powerUps.splice(i, 1); // retira a powerUp ao passar em cima
-            
-             //fazer os fantasmas ficarem assustados
-            fantasmas.forEach(fantasma => {
-                fantasma.assutado = true;
-                console.log(fantasma.assutado);
-
-                setTimeout(()=>{
-                    fantasma.assutado = false;
-                    console.log(fantasma.assutado);
-                },5000)
-            })
-        }
+        powerUp.update();
     }
     //toca as bolinhas aqui
     for(let i = mapa.bolinhas.length - 1; i > 0; i--){
@@ -141,7 +124,7 @@ function animacao(){
         }
     }
 
-    globalThis.mapa.limites.forEach((limite) => {
+    mapa.limites.forEach((limite) => {
         limite.draw();
     })
 

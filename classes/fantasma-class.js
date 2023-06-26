@@ -15,11 +15,11 @@ export class Fantasma extends GameObject{
     }
     
     drawg(){
-        globalThis.ctx.beginPath();
-        globalThis.ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI*2);
-        globalThis.ctx.fillStyle = this.assutado ? 'blue' : this.color;
-        globalThis.ctx.fill();
-        globalThis.ctx.closePath();
+        ctx.beginPath();
+        ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI*2);
+        ctx.fillStyle = this.assutado ? 'blue' : this.color;
+        ctx.fill();
+        ctx.closePath();
     }
     update(){
         this.drawg();

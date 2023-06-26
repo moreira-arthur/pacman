@@ -21,23 +21,47 @@ export class Jogador extends GameObject{
     }
     
     draw(){
-        globalThis.ctx.save();
-        globalThis.ctx.translate(this.position.x, this.position.y)
-        globalThis.ctx.rotate(this.#rotation);
-        globalThis.ctx.translate(-this.position.x, -this.position.y)
-        globalThis.ctx.beginPath();
-        globalThis.ctx.arc(this.position.x, this.position.y, this.radius, this.#radians , Math.PI*2 - this.#radians);
-        globalThis.ctx.lineTo(this.position.x, this.position.y);
-        globalThis.ctx.fillStyle = 'yellow';
-        globalThis.ctx.fill();
-        globalThis.ctx.closePath()
-        globalThis.ctx.restore();
+        ctx.save();
+        ctx.translate(this.position.x, this.position.y)
+        ctx.rotate(this.#rotation);
+        ctx.translate(-this.position.x, -this.position.y)
+        ctx.beginPath();
+        ctx.arc(this.position.x, this.position.y, this.radius, this.#radians , Math.PI*2 - this.#radians);
+        ctx.lineTo(this.position.x, this.position.y);
+        ctx.fillStyle = 'yellow';
+        ctx.fill();
+        ctx.closePath()
+        ctx.restore();
     }
 
     update(){
         this.draw();
         this.#mouthAnim();
 
+        this.#setVel();
+        globalThis.mapa.limites.forEach((limite) => {
+            if(circleCollidesWithRectangle({
+                circle: this,
+                rectangle: limite
+            })
+            ){
+                this.velocity.y=0;
+                this.velocity.x=0;
+            }
+        })
+
+        this.position.x += this.velocity.x;
+        this.position.y += this.velocity.y;
+
+        this.#rotate();
+    }
+
+    #mouthAnim(){
+        if( this.#radians < 0 || this.#radians > .75) Jogador.#openRate = -Jogador.#openRate;
+        this.#radians += Jogador.#openRate;
+    }
+
+    #setVel(){
         // fazendo com que o player se movimente suavemente, e com colisão aos limites
         if (this.#inputHandler.keys.w.pressed && this.#inputHandler.lastkey === 'w'){
             for(let i = 0; i < globalThis.mapa.limites.length; i++){
@@ -53,22 +77,6 @@ export class Jogador extends GameObject{
                     break;
                 }else{
                     this.velocity.y = -5;
-                }
-            }
-        } else if (this.#inputHandler.keys.a.pressed && this.#inputHandler.lastkey === 'a'){
-            for(let i = 0; i < globalThis.mapa.limites.length; i++){
-                const limite = globalThis.mapa.limites[i];
-                if(circleCollidesWithRectangle({
-                    circle: {...this,velocity:{
-                        x: -5,
-                        y: 0
-                    }},
-                    rectangle: limite
-                })){
-                    this.velocity.x = 0;
-                    break;
-                }else{
-                    this.velocity.x = -5;
                 }
             }
         } else if (this.#inputHandler.keys.s.pressed && this.#inputHandler.lastkey === 's'){
@@ -103,29 +111,23 @@ export class Jogador extends GameObject{
                     this.velocity.x = 5;
                 }
             }
-        }
-
-        globalThis.mapa.limites.forEach((limite) => {
-            if(circleCollidesWithRectangle({
-                circle: this,
-                rectangle: limite
-            })
-            ){
-                // console.log('oi')
-                this.velocity.y=0;
-                this.velocity.x=0;
+        } else if (this.#inputHandler.keys.a.pressed && this.#inputHandler.lastkey === 'a'){
+            for(let i = 0; i < globalThis.mapa.limites.length; i++){
+                const limite = globalThis.mapa.limites[i];
+                if(circleCollidesWithRectangle({
+                    circle: {...this,velocity:{
+                        x: -5,
+                        y: 0
+                    }},
+                    rectangle: limite
+                })){
+                    this.velocity.x = 0;
+                    break;
+                }else{
+                    this.velocity.x = -5;
+                }
             }
-        })
-
-        this.position.x += this.velocity.x;
-        this.position.y += this.velocity.y;
-
-        this.#rotate();
-    }
-
-    #mouthAnim(){
-        if( this.#radians < 0 || this.#radians > .75) Jogador.#openRate = -Jogador.#openRate;
-        this.#radians += Jogador.#openRate;
+        }
     }
 
     #rotate(){

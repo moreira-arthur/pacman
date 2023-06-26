@@ -21,7 +21,7 @@ export class Limite extends GameObject{
     }
 
     draw() {
-        globalThis.ctx.drawImage(this.image,this.position.x, this.position.y)
+        ctx.drawImage(this.image,this.position.x, this.position.y)
     }
     update(){
 
