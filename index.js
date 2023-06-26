@@ -245,7 +245,8 @@ function animacao(){
     animacaoId = requestAnimationFrame(animacao);
     // console.log(animacaoId);
     ctx.clearRect(0,0,canvas.width, canvas.height)
- // fazendo com que o player se movimente suavemente, e com colisão aos limites
+    // Transferir lógica para Jogador (mapa deve estar localizado)
+    // fazendo com que o player se movimente suavemente, e com colisão aos limites
     if (inputHandler.keys.w.pressed && inputHandler.lastkey === 'w'){
         for(let i = 0; i < limites.length; i++){
             const limite = limites[i];

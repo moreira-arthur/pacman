@@ -15,7 +15,6 @@ export class InputHandler{
         }
     }
     constructor(){
-        console.log("Hey");
         window.addEventListener('keydown', ({ key }) => {
             switch(key){
                 case 'w':
