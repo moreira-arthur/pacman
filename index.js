@@ -3,6 +3,8 @@ import { Jogador } from "./classes/jogador-class.js"
 import { Bolinha } from "./classes/bolinha-class.js"
 import { Fantasma } from "./classes/fantasma-class.js"
 import { PowerUp } from "./classes/power-up-class.js"
+import { lastkey, keys, setupInput } from "./input-handler.js"
+import circleCollidesWithRectangle from "./circle-collision.js"
 
 // definindo a area de jogo
 const canvas = document.querySelector('canvas');
@@ -68,21 +70,7 @@ const player = new Jogador ({
     },
     ctx: ctx
 })
-const keys = {
-    w: { 
-        pressed: false
-    },
-    a: { 
-        pressed: false
-    },
-    s: { 
-        pressed: false
-    },
-    d: { 
-        pressed: false
-    }
-}
-let lastkey = '';
+
 let score = 0;
 // desenhando o mapa por meio de uma matriz
 const mapa = [
@@ -110,6 +98,7 @@ function criarImagem(src){
 // Criando o mapa através de um loop
 mapa.forEach((row,i) =>{
     row.forEach((simbolo,j) =>{
+        // Automatizar esta parte! está meio ineficiente (criar um objeto com todas as referências das imagens)
         switch(simbolo){
             case '-':
                 limites.push(new Limite({
@@ -247,13 +236,7 @@ mapa.forEach((row,i) =>{
         }
     })
 })
-function circleCollidesWithRectangle({circle,rectangle}){
-    const padding = Limite.width/ 2 - circle.radius - 1 ;
 
-    return(
-        circle.position.y - circle.radius + circle.velocity.y <= rectangle.position.y + rectangle.height + padding && circle.position.y + circle.radius + circle.velocity.y >= rectangle.position.y - padding && circle.position.x + circle.radius + circle.velocity.x >= rectangle.position.x - padding && circle.position.x - circle.radius + circle.velocity.x <= rectangle.position.x + rectangle.width + padding
-        )
-}
 let animacaoId;
 // funcao que fica em looping infito fazendo com que o player se mova
 function animacao(){
@@ -262,7 +245,7 @@ function animacao(){
     ctx.clearRect(0,0,canvas.width, canvas.height)
  // fazendo com que o player se movimente suavemente, e com colisão aos limites
     if (keys.w.pressed && lastkey === 'w'){
-        for(let i = 0; i <limites.length; i++){
+        for(let i = 0; i < limites.length; i++){
             const limite = limites[i];
             if(circleCollidesWithRectangle({
                 circle: {...player,velocity:{
@@ -329,19 +312,19 @@ function animacao(){
     //detecta colisao entre fantasmas e o player
     for(let i = fantasmas.length - 1; i >= 0; i--){
         const fantasma = fantasmas[i];
-            // faz com que o jogo se encerre ao perder
-            if(Math.hypot(fantasma.position.x - player.position.x, fantasma.position.y - player.position.y) < fantasma.radius + player.radius){
-                if(fantasma.assutado){
-                    fantasmas.splice(i, 1);
-                }else{
-                    cancelAnimationFrame(animacaoId);
-                    console.log("You Lose")
-                    resultado.innerHTML = "Você PERDEU, mais sorte na próxima vez =D !";
-                    resultado.style.color = 'red';
-                }
-
+        // faz com que o jogo se encerre ao perder
+        if(Math.hypot(fantasma.position.x - player.position.x, fantasma.position.y - player.position.y) < fantasma.radius + player.radius){
+            if(fantasma.assutado){
+                fantasmas.splice(i, 1);
+            }else{
+                cancelAnimationFrame(animacaoId);
+                console.log("You Lose")
+                resultado.innerHTML = "Você PERDEU, mais sorte na próxima vez =D !";
+                resultado.style.color = 'red';
             }
+
         }
+    }
 
     // condicao de ganhar fica aqui
     if(bolinhas.length ===  1){
@@ -349,8 +332,8 @@ function animacao(){
         resultado.style.color = 'green'; 
         console.log('You win');
         cancelAnimationFrame(animacaoId);
-        
     }
+    
     // Criação dos PowerUps
     for(let i = powerUps.length - 1; i >= 0; i--){
         const powerUp = powerUps[i];
@@ -396,9 +379,7 @@ function animacao(){
             // console.log('oi')
             player.velocity.y=0;
             player.velocity.x=0;
-
         }
-
     })
     player.update();
     // player.velocity.y=0;
@@ -519,40 +500,4 @@ function animacao(){
 
 animacao()
 
-window.addEventListener('keydown', ({ key }) => {
-    switch(key){
-        case 'w':
-            keys.w.pressed = true;
-            lastkey = 'w';
-            break;
-        case 'a':
-            keys.a.pressed = true;
-            lastkey = 'a';
-            break;
-        case 's':
-            keys.s.pressed = true;
-            lastkey = 's';
-            break; 
-        case 'd':
-            keys.d.pressed = true;
-            lastkey = 'd';
-            break;                     
-    }
-})
-window.addEventListener('keyup', ({ key }) => {
-    switch(key){
-        case 'w':
-            keys.w.pressed = false;
-            break;
-        case 'a':
-            keys.a.pressed = false;
-            break;
-        case 's':
-            keys.s.pressed = false;
-            break; 
-        case 'd':
-            keys.d.pressed = false;
-            break;                     
-    }
-
-})
+setupInput()
