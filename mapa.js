@@ -26,6 +26,9 @@ export class Limite extends GameObject{
         // ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
         this.ctx.drawImage(this.image,this.position.x, this.position.y)
     }
+    update(){
+
+    }
 }
 
 export class Mapa{
@@ -116,15 +119,18 @@ export class Mapa{
             })
         })
     }
-    draw(){
+    update(){
         this.limites.forEach((limite) => {
             limite.draw();
+            limite.update();
         });
         this.powerUps.forEach((powerUp) => {
             powerUp.draw();
+            powerUp.update();
         });
         this.bolinhas.forEach((bolinha) => {
             bolinha.draw();
+            bolinha.update();
         });
     }
 }

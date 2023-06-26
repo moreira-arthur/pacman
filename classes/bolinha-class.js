@@ -16,4 +16,7 @@ export class Bolinha extends GameObject{
         this.ctx.fill();
         this.ctx.closePath();
     }
+    update(){
+        
+    }
 }

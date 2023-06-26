@@ -1,14 +1,18 @@
-export class Fantasma {
+import { GameObject } from "./game-obj.js";
+
+export class Fantasma extends GameObject{
     static speed = 2;
-    constructor({position,velocity, color = 'red', ctx }){
-        this.position = position;
+    constructor({position,ctx,velocity, color = 'red'}){
+        super({
+            position: position,
+            ctx: ctx
+        });
         this.velocity = velocity;
         this.radius = 15;
         this.color = color;
         this.colisoesprevias = [];
         this.speed = 2;
         this.assutado = false;
-        this.ctx = ctx;
     }
     
     drawg(){

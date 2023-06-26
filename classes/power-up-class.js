@@ -16,4 +16,7 @@ export class PowerUp extends GameObject{
         this.ctx.fill();
         this.ctx.closePath();
     }
+    update(){
+        
+    }
 }

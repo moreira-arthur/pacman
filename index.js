@@ -79,9 +79,9 @@ let inputHandler = new InputHandler();
 
 function animacao(){
     animacaoId = requestAnimationFrame(animacao);
-    // console.log(animacaoId);
-    ctx.clearRect(0,0,canvas.width, canvas.height)
-    // Transferir lógica para Jogador (mapa deve estar localizado)
+
+    ctx.clearRect(0,0,canvas.width, canvas.height);
+
     // fazendo com que o player se movimente suavemente, e com colisão aos limites
     if (inputHandler.keys.w.pressed && inputHandler.lastkey === 'w'){
         for(let i = 0; i < mapa.limites.length; i++){
@@ -220,6 +220,7 @@ function animacao(){
             player.velocity.x=0;
         }
     })
+    
     player.update();
     // player.velocity.y=0;
     // player.velocity.x=0;
@@ -329,10 +330,6 @@ function animacao(){
         }
         // console.log(colisoes)
     })
-    if(player.velocity.x > 0) player.rotate = 0;
-    else if(player.velocity.x < 0) player.rotate = Math.PI;
-    else if(player.velocity.y > 0) player.rotate = Math.PI/2;
-    else if(player.velocity.y < 0) player.rotate = Math.PI*1.5;
 
 } // final da animação
 
