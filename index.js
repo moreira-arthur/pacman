@@ -1,4 +1,4 @@
-import { Mapa, Limite } from "./mapa.js"
+import { Mapa, Limite } from "./classes/mapa-class.js"
 import { Jogador } from "./classes/jogador-class.js"
 import { Fantasma } from "./classes/fantasma-class.js"
 import { circleCollidesWithRectangle, circleCollidesWithCircle } from "./circle-collision.js"

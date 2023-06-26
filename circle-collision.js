@@ -1,4 +1,4 @@
-import { Limite } from "./mapa.js"
+import { Limite } from "./classes/mapa-class.js"
 
 export function circleCollidesWithRectangle({circle,rectangle}){
     const padding = Limite.width/ 2 - circle.radius - 1 ;
