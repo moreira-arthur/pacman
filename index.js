@@ -1,11 +1,9 @@
-import { Limite } from "./classes/limite-class.js"
+// import { Limite } from "./classes/limite-class.js"
+import { Mapa, Limite } from "./mapa.js"
 import { Jogador } from "./classes/jogador-class.js"
-import { Bolinha } from "./classes/bolinha-class.js"
 import { Fantasma } from "./classes/fantasma-class.js"
-import { PowerUp } from "./classes/power-up-class.js"
 import { InputHandler } from "./input-handler.js"
 import circleCollidesWithRectangle from "./circle-collision.js"
-import criarImagem from "./criar-imagem.js"
 
 // definindo a area de jogo
 const canvas = document.querySelector('canvas');
@@ -17,10 +15,6 @@ const resultado = document.getElementById('Result');
 
 // canvas.width = window.innerWidth;
 // canvas.height = window.innerHeight;
-
-const bolinhas = [];
-const limites = [];
-const powerUps = [];
 
 //fazer função criar fantasma
 const fantasmas = [
@@ -73,169 +67,16 @@ const player = new Jogador ({
 })
 
 let score = 0;
-// desenhando o mapa por meio de uma matriz
-const mapa = [
-    ['c1', '-', '-', '-', '-', '-', '-', '-', '-', '-', 'c2'],
-    ['|', '.', '.', '.', '.', '.', '.', '.', '.', '.', '|'],
-    ['|', '.', 'blk', '.', '[', '7', ']', '.', 'blk', '.', '|'],
-    ['|', '.', '.', '.', '.', '_', '.', '.', '.', '.', '|'],
-    ['|', '.', '[', ']', '.', '.', '.', '[', ']', '.', '|'],
-    ['|', '.', '.', '.', '.', '^', '.', '.', '.', '.', '|'],
-    ['|', '.', 'blk', '.', '[', '+', ']', '.', 'blk', '.', '|'],
-    ['|', '.', '.', '.', '.', '_', '.', '.', '.', '.', '|'],
-    ['|', '.', '[', ']', '.', '.', '.', '[', ']', '.', '|'],
-    ['|', '.', '.', '.', '.', '^', '.', '.', '.', '.', '|'],
-    ['|', '.', 'blk', '.', '[', '5', ']', '.', 'blk', '.', '|'],
-    ['|', '.', '.', '.', '.', '.', '.', '.', '.', 'p', '|'],
-    ['c4', '-', '-', '-', '-', '-', '-', '-', '-', '-', 'c3']
-];
 
-// Criando o mapa através de um loop
-mapa.forEach((row,i) =>{
-    row.forEach((simbolo,j) =>{
-        // Automatizar esta parte! está meio ineficiente (criar um objeto com todas as referências das imagens)
-        switch(simbolo){
-            case '-':
-                limites.push(new Limite({
-                    position:{x:Limite.width * j, y: Limite.height * i},
-                    image:criarImagem('./img/pipeHorizontal.png'),
-                    ctx: ctx
-                }))
-                break;
-            case '|':
-                limites.push(new Limite({
-                    position:{x:Limite.width * j, y: Limite.height * i},
-                    image: criarImagem('./img/pipeVertical.png'),
-                    ctx: ctx
-                }))
-                break;
-            case 'c1':
-                limites.push(new Limite({
-                    position:{x:Limite.width * j, y: Limite.height * i},
-                    image: criarImagem('./img/pipeCorner1.png'),
-                    ctx: ctx
-                }))
-                break;
-            case 'c2':
-                limites.push(new Limite({
-                    position:{x:Limite.width * j, y: Limite.height * i},
-                    image: criarImagem('./img/pipeCorner2.png'),
-                    ctx: ctx
-                }))
-                break;
-            case 'c3':
-                limites.push(new Limite({
-                    position:{x:Limite.width * j, y: Limite.height * i},
-                    image: criarImagem('./img/pipeCorner3.png'),
-                    ctx: ctx
-                }))
-                break;
-            case 'c4':
-                limites.push(new Limite({
-                    position:{x:Limite.width * j, y: Limite.height * i},
-                    image: criarImagem('./img/pipeCorner4.png'),
-                    ctx: ctx
-                }))
-                break;
-            case 'blk':
-                limites.push(new Limite({
-                    position:{x:Limite.width * j, y: Limite.height * i},
-                    image: criarImagem('./img/block.png'),
-                    ctx: ctx
-                }))
-                break;
-            case '[':
-                limites.push(new Limite({
-                    position: {x: j * Limite.width, y: i * Limite.height},
-                    image: criarImagem('./img/capLeft.png'),
-                    ctx: ctx
-                }))
-                break;
-            case ']':
-                limites.push(new Limite({
-                    position:{x: j * Limite.width, y: i * Limite.height},
-                    image: criarImagem('./img/capRight.png'),
-                    ctx: ctx
-                }))
-                break;
-            case '_':
-                limites.push(new Limite({
-                    position: {x: j * Limite.width,y: i * Limite.height},
-                    image: criarImagem('./img/capBottom.png'),
-                    ctx: ctx
-                }))
-                break;
-            case '^':
-                limites.push(new Limite({
-                    position: {x: j * Limite.width,y: i * Limite.height},
-                    image: criarImagem('./img/capTop.png'),
-                    ctx: ctx
-                }))
-                break;
-            case '+':
-                limites.push(new Limite({
-                    position: {x: j * Limite.width,y: i * Limite.height},
-                    image: criarImagem('./img/pipeCross.png'),
-                    ctx: ctx
-                }))
-                break;
-            case '5':
-                limites.push(new Limite({
-                    position: {x: j * Limite.width,y: i * Limite.height},
-                    color: 'blue',
-                    image: criarImagem('./img/pipeConnectorTop.png'),
-                    ctx: ctx
-                }))
-                break;
-            case '6':
-                limites.push(new Limite({
-                    position: {x: j * Limite.width,y: i * Limite.height},
-                    color: 'blue',
-                    image: criarImagem('./img/pipeConnectorRight.png'),
-                    ctx: ctx
-                    }))
-                break;
-            case '7':
-                limites.push(new Limite({
-                    position: {x: j * Limite.width,y: i * Limite.height},
-                    color: 'blue',
-                    image: criarImagem('./img/pipeConnectorBottom.png'),
-                    ctx: ctx
-                }))
-                break;
-            case '8':
-                limites.push(new Limite({
-                    position: {x: j * Limite.width,y: i * Limite.height},
-                    image: criarImagem('./img/pipeConnectorLeft.png'),
-                    ctx: ctx
-                }))
-                break;
-            case '.':
-                bolinhas.push(new Bolinha({
-                    position: {
-                        x: j * Limite.width + Limite.width / 2,
-                        y: i * Limite.height + Limite.height / 2
-                    },
-                    ctx: ctx
-                }))
-                break;
-            case 'p':
-                powerUps.push(new PowerUp({
-                    position: {
-                        x: j * Limite.width + Limite.width / 2,
-                        y: i * Limite.height + Limite.height / 2
-                    },
-                    ctx: ctx
-                }))
-                break;
-        }
-    })
-})
+let mapa = new Mapa({
+    ctx: ctx
+});
 
 let animacaoId;
 
 let inputHandler = new InputHandler();
 // funcao que fica em looping infito fazendo com que o player se mova
+
 function animacao(){
     animacaoId = requestAnimationFrame(animacao);
     // console.log(animacaoId);
@@ -243,8 +84,8 @@ function animacao(){
     // Transferir lógica para Jogador (mapa deve estar localizado)
     // fazendo com que o player se movimente suavemente, e com colisão aos limites
     if (inputHandler.keys.w.pressed && inputHandler.lastkey === 'w'){
-        for(let i = 0; i < limites.length; i++){
-            const limite = limites[i];
+        for(let i = 0; i < mapa.limites.length; i++){
+            const limite = mapa.limites[i];
             if(circleCollidesWithRectangle({
                 circle: {...player,velocity:{
                     x: 0,
@@ -259,8 +100,8 @@ function animacao(){
             }
         }
     } else if (inputHandler.keys.a.pressed && inputHandler.lastkey === 'a'){
-        for(let i = 0; i <limites.length; i++){
-            const limite = limites[i];
+        for(let i = 0; i < mapa.limites.length; i++){
+            const limite = mapa.limites[i];
             if(circleCollidesWithRectangle({
                 circle: {...player,velocity:{
                     x: -5,
@@ -275,8 +116,8 @@ function animacao(){
             }
         }
     } else if (inputHandler.keys.s.pressed && inputHandler.lastkey === 's'){
-        for(let i = 0; i <limites.length; i++){
-            const limite = limites[i];
+        for(let i = 0; i < mapa.limites.length; i++){
+            const limite = mapa.limites[i];
             if(circleCollidesWithRectangle({
                 circle: {...player,velocity:{
                     x: 0,
@@ -291,8 +132,8 @@ function animacao(){
             }
         }
     } else if (inputHandler.keys.d.pressed && inputHandler.lastkey === 'd'){
-        for(let i = 0; i <limites.length; i++){
-            const limite = limites[i];
+        for(let i = 0; i < mapa.limites.length; i++){
+            const limite = mapa.limites[i];
             if(circleCollidesWithRectangle({
                 circle: {...player,velocity:{
                     x: 5,
@@ -325,7 +166,7 @@ function animacao(){
     }
 
     // condicao de ganhar fica aqui
-    if(bolinhas.length ===  1){
+    if(mapa.bolinhas.length ===  1){
         resultado.innerHTML = "Você Ganhou, PARABÉNS !!";
         resultado.style.color = 'green'; 
         console.log('You win');
@@ -333,12 +174,12 @@ function animacao(){
     }
     
     // Criação dos PowerUps
-    for(let i = powerUps.length - 1; i >= 0; i--){
-        const powerUp = powerUps[i];
+    for(let i = mapa.powerUps.length - 1; i >= 0; i--){
+        const powerUp = mapa.powerUps[i];
         powerUp.draw();
         // player coleta o powerup
         if(Math.hypot(powerUp.position.x - player.position.x, powerUp.position.y - player.position.y) < powerUp.radius + player.radius){
-             powerUps.splice(i, 1); // retira a powerUp ao passar em cima
+            mapa.powerUps.splice(i, 1); // retira a powerUp ao passar em cima
             
              //fazer os fantasmas ficarem assustados
             fantasmas.forEach(fantasma => {
@@ -353,20 +194,20 @@ function animacao(){
         }
     }
     //toca as bolinhas aqui
-    for(let i = bolinhas.length - 1; i > 0; i--){
-        const bolinha = bolinhas[i];
+    for(let i = mapa.bolinhas.length - 1; i > 0; i--){
+        const bolinha = mapa.bolinhas[i];
         bolinha.draw();
 
         if(Math.hypot(bolinha.position.x - player.position.x, bolinha.position.y - player.position.y) < bolinha.radius + player.radius){
             // console.log("Tocando");
-            bolinhas.splice(i, 1); // retira a bolinha ao passar em cima
-            console.log(bolinhas.length)
+            mapa.bolinhas.splice(i, 1); // retira a bolinha ao passar em cima
+            console.log(mapa.bolinhas.length)
             score = score + 10;
             scoreEl.innerHTML = score;
         }
     }
 
-    limites.forEach((limite) => {
+    mapa.limites.forEach((limite) => {
         limite.draw()
         // detecta a colisão do player com o limite
         if(circleCollidesWithRectangle({
@@ -387,7 +228,7 @@ function animacao(){
         fantasma.update()
 
         const colisoes = [];
-        limites.forEach(limite =>{
+        mapa.limites.forEach(limite =>{
             if( !colisoes.includes('right') && circleCollidesWithRectangle({
                 circle: {...fantasma,velocity:{
                     x: fantasma.speed,
