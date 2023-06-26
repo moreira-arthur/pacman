@@ -2,8 +2,9 @@ import { GameObject } from "./game-obj.js"
 // classe que define o pacman
 export class Jogador extends GameObject{
     static speed = 2.5;
+    static #openRate = 0.12
     #radians
-    #openRate
+    // #openRate
     #rotation
     constructor({position,ctx,velocity}){
         super({
@@ -13,7 +14,7 @@ export class Jogador extends GameObject{
         this.velocity = velocity;
         this.radius = 15;
         this.#radians = 0.75; 
-        this.#openRate = 0.12;
+        // this.#openRate = 0.12;
         this.#rotation = 0;
     }
     
@@ -41,8 +42,8 @@ export class Jogador extends GameObject{
     }
 
     #mouthAnim(){
-        if( this.#radians < 0 || this.#radians > .75) this.#openRate = -this.#openRate;
-        this.#radians += this.#openRate;
+        if( this.#radians < 0 || this.#radians > .75) Jogador.#openRate = -Jogador.#openRate;
+        this.#radians += Jogador.#openRate;
     }
 
     #rotate(){

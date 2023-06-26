@@ -3,7 +3,7 @@ import { Mapa, Limite } from "./mapa.js"
 import { Jogador } from "./classes/jogador-class.js"
 import { Fantasma } from "./classes/fantasma-class.js"
 import { InputHandler } from "./input-handler.js"
-import circleCollidesWithRectangle from "./circle-collision.js"
+import { circleCollidesWithRectangle, circleCollidesWithCircle } from "./circle-collision.js"
 
 // definindo a area de jogo
 const canvas = document.querySelector('canvas');
@@ -152,7 +152,10 @@ function animacao(){
     for(let i = fantasmas.length - 1; i >= 0; i--){
         const fantasma = fantasmas[i];
         // faz com que o jogo se encerre ao perder
-        if(Math.hypot(fantasma.position.x - player.position.x, fantasma.position.y - player.position.y) < fantasma.radius + player.radius){
+        if(circleCollidesWithCircle({
+            circle1: fantasma,
+            circle2: player
+        })){
             if(fantasma.assutado){
                 fantasmas.splice(i, 1);
             }else{
@@ -178,7 +181,10 @@ function animacao(){
         const powerUp = mapa.powerUps[i];
         powerUp.draw();
         // player coleta o powerup
-        if(Math.hypot(powerUp.position.x - player.position.x, powerUp.position.y - player.position.y) < powerUp.radius + player.radius){
+        if(circleCollidesWithCircle({
+            circle1: powerUp,
+            circle2: player
+        })){
             mapa.powerUps.splice(i, 1); // retira a powerUp ao passar em cima
             
              //fazer os fantasmas ficarem assustados
@@ -198,7 +204,10 @@ function animacao(){
         const bolinha = mapa.bolinhas[i];
         bolinha.draw();
 
-        if(Math.hypot(bolinha.position.x - player.position.x, bolinha.position.y - player.position.y) < bolinha.radius + player.radius){
+        if(circleCollidesWithCircle({
+            circle1: bolinha,
+            circle2: player
+        })){
             // console.log("Tocando");
             mapa.bolinhas.splice(i, 1); // retira a bolinha ao passar em cima
             console.log(mapa.bolinhas.length)
@@ -220,10 +229,8 @@ function animacao(){
             player.velocity.x=0;
         }
     })
-    
+
     player.update();
-    // player.velocity.y=0;
-    // player.velocity.x=0;
 
     fantasmas.forEach(fantasma => {
         fantasma.update()
