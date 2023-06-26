@@ -5,6 +5,7 @@ import { Fantasma } from "./classes/fantasma-class.js"
 import { PowerUp } from "./classes/power-up-class.js"
 import { InputHandler } from "./input-handler.js"
 import circleCollidesWithRectangle from "./circle-collision.js"
+import criarImagem from "./criar-imagem.js"
 
 // definindo a area de jogo
 const canvas = document.querySelector('canvas');
@@ -64,11 +65,11 @@ const player = new Jogador ({
         x:Limite.width + Limite.width/2,
         y:Limite.height + Limite.height/2
     },
+    ctx: ctx,
     velocity:{
         x:0,
         y:0
-    },
-    ctx: ctx
+    }
 })
 
 let score = 0;
@@ -88,12 +89,6 @@ const mapa = [
     ['|', '.', '.', '.', '.', '.', '.', '.', '.', 'p', '|'],
     ['c4', '-', '-', '-', '-', '-', '-', '-', '-', '-', 'c3']
 ];
-
-function criarImagem(src){
-    const image = new Image();
-    image.src = src;
-    return image;
-}
 
 // Criando o mapa através de um loop
 mapa.forEach((row,i) =>{

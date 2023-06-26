@@ -1,8 +1,12 @@
-export class PowerUp {
+import { GameObject } from "./game-obj.js";
+
+export class PowerUp extends GameObject{
     constructor({position, ctx}){
-        this.position = position;
+        super({
+            position: position,
+            ctx: ctx
+        })
         this.radius = 10;
-        this.ctx = ctx;
     }
 
     draw(){

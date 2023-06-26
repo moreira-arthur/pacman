@@ -1,8 +1,12 @@
-export class Bolinha {
+import { GameObject } from "./game-obj.js";
+
+export class Bolinha extends GameObject{
     constructor({position, ctx}){
-        this.position = position;
+        super({
+            position: position,
+            ctx: ctx
+        })
         this.radius = 3;
-        this.ctx = ctx;
     }
 
     draw(){

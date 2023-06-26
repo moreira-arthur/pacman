@@ -1,17 +1,20 @@
+import { GameObject } from "./game-obj.js"
 // classe que define o pacman
-export class Jogador {
+export class Jogador extends GameObject{
     static speed = 2.5;
-    constructor({position,velocity,ctx}){
-        this.position = position;
+    constructor({position,ctx,velocity}){
+        super({
+            position: position,
+            ctx: ctx
+        });
         this.velocity = velocity;
         this.radius = 15;
         this.radians = 0.75; 
         this.openRate = 0.12;
         this.rotate = 0;
-        this.ctx = ctx;
     }
     
-    drawp(){
+    draw(){
         this.ctx.save();
         this.ctx.translate(this.position.x, this.position.y)
         this.ctx.rotate(this.rotate);
@@ -25,7 +28,7 @@ export class Jogador {
         this.ctx.restore();
     }
     update(){
-        this.drawp();
+        this.draw();
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
 
