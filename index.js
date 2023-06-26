@@ -233,7 +233,6 @@ function animacao(){
             // reseta o registro de colisoes
             fantasma.colisoesprevias = [];
         }
-        // console.log(colisoes)
     })
 
 } // final da animação
