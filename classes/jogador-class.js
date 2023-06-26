@@ -105,6 +105,18 @@ export class Jogador extends GameObject{
             }
         }
 
+        globalThis.mapa.limites.forEach((limite) => {
+            if(circleCollidesWithRectangle({
+                circle: this,
+                rectangle: limite
+            })
+            ){
+                // console.log('oi')
+                this.velocity.y=0;
+                this.velocity.x=0;
+            }
+        })
+
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
 

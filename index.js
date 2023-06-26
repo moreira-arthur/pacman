@@ -1,8 +1,6 @@
-// import { Limite } from "./classes/limite-class.js"
 import { Mapa, Limite } from "./mapa.js"
 import { Jogador } from "./classes/jogador-class.js"
 import { Fantasma } from "./classes/fantasma-class.js"
-import { InputHandler } from "./input-handler.js"
 import { circleCollidesWithRectangle, circleCollidesWithCircle } from "./circle-collision.js"
 
 // definindo a area de jogo
@@ -68,7 +66,6 @@ globalThis.mapa = new Mapa();
 
 let animacaoId;
 
-let inputHandler = new InputHandler();
 // funcao que fica em looping infito fazendo com que o player se mova
 
 function animacao(){
@@ -76,72 +73,6 @@ function animacao(){
 
     ctx.clearRect(0,0,canvas.width, canvas.height);
 
-    // fazendo com que o player se movimente suavemente, e com colisão aos limites
-    // if (inputHandler.keys.w.pressed && inputHandler.lastkey === 'w'){
-    //     for(let i = 0; i < mapa.limites.length; i++){
-    //         const limite = mapa.limites[i];
-    //         if(circleCollidesWithRectangle({
-    //             circle: {...player,velocity:{
-    //                 x: 0,
-    //                 y: -5
-    //             }},
-    //             rectangle: limite
-    //         })){
-    //             player.velocity.y = 0;
-    //             break;
-    //         }else{
-    //             player.velocity.y = -5;
-    //         }
-    //     }
-    // } else if (inputHandler.keys.a.pressed && inputHandler.lastkey === 'a'){
-    //     for(let i = 0; i < mapa.limites.length; i++){
-    //         const limite = mapa.limites[i];
-    //         if(circleCollidesWithRectangle({
-    //             circle: {...player,velocity:{
-    //                 x: -5,
-    //                 y: 0
-    //             }},
-    //             rectangle: limite
-    //         })){
-    //             player.velocity.x = 0;
-    //             break;
-    //         }else{
-    //             player.velocity.x = -5;
-    //         }
-    //     }
-    // } else if (inputHandler.keys.s.pressed && inputHandler.lastkey === 's'){
-    //     for(let i = 0; i < mapa.limites.length; i++){
-    //         const limite = mapa.limites[i];
-    //         if(circleCollidesWithRectangle({
-    //             circle: {...player,velocity:{
-    //                 x: 0,
-    //                 y: 5
-    //             }},
-    //             rectangle: limite
-    //         })){
-    //             player.velocity.y = 0;
-    //             break;
-    //         }else{
-    //             player.velocity.y = 5;
-    //         }
-    //     }
-    // } else if (inputHandler.keys.d.pressed && inputHandler.lastkey === 'd'){
-    //     for(let i = 0; i < mapa.limites.length; i++){
-    //         const limite = mapa.limites[i];
-    //         if(circleCollidesWithRectangle({
-    //             circle: {...player,velocity:{
-    //                 x: 5,
-    //                 y: 0
-    //             }},
-    //             rectangle: limite
-    //         })){
-    //             player.velocity.x = 0;
-    //             break;
-    //         }else{
-    //             player.velocity.x = 5;
-    //         }
-    //     }
-    // }
     //detecta colisao entre fantasmas e o player
     for(let i = fantasmas.length - 1; i >= 0; i--){
         const fantasma = fantasmas[i];
@@ -210,18 +141,8 @@ function animacao(){
         }
     }
 
-    mapa.limites.forEach((limite) => {
-        limite.draw()
-        // detecta a colisão do player com o limite
-        if(circleCollidesWithRectangle({
-            circle: player,
-            rectangle: limite
-        })
-        ){
-            // console.log('oi')
-            player.velocity.y=0;
-            player.velocity.x=0;
-        }
+    globalThis.mapa.limites.forEach((limite) => {
+        limite.draw();
     })
 
     player.update();
