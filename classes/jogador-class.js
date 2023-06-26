@@ -1,5 +1,6 @@
 // classe que define o pacman
 export class Jogador {
+    static speed = 2.5;
     constructor({position,velocity,ctx}){
         this.position = position;
         this.velocity = velocity;
