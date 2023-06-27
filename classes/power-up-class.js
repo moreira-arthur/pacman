@@ -1,4 +1,5 @@
 import { Coletavel } from "./coletavel-class.js";
+import { Jogador } from "./jogador-class.js";
 
 export class PowerUp extends Coletavel{
     constructor({position}){

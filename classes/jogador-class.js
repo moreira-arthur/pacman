@@ -1,19 +1,33 @@
 import { InputHandler } from "../input-handler.js";
 import { GameObject } from "./game-obj.js"
-import { circleCollidesWithRectangle } from "../circle-collision.js"
+import { circleCollidesWithRectangle , circleCollidesWithCircle } from "../circle-collision.js"
 
 // classe que define o pacman
 export class Jogador extends GameObject{
-    static #speed = 4;
-    static #openRate = 0.12
-    #radians
-    #rotation
+    static initialSpeed = 4;
+    static initialOpenRate = Jogador.initialSpeed/32;
+    #speed;
+    #openRate;
+    #radians;
+    #rotation;
     #inputHandler;
+
+    get getSpeed(){
+        return this.#speed;
+    }
+
+    set setSpeed(val){
+        this.#speed = val;
+        this.#openRate = val/32;
+    }
+
     constructor({position,velocity = {x:0,y:0}}){
         super({
             position: position
         });
         this.velocity = velocity;
+        this.#speed = Jogador.initialSpeed;
+        this.#openRate = Jogador.initialOpenRate;
         this.radius = 15;
         this.#radians = 0.75;
         this.#rotation = 0;
@@ -43,13 +57,14 @@ export class Jogador extends GameObject{
 
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
-
         this.#rotate();
+
+        this.#ghostCollision();
     }
 
     #mouthAnim(){
-        if( this.#radians < 0 || this.#radians > .75) Jogador.#openRate = -Jogador.#openRate;
-        this.#radians += Jogador.#openRate;
+        if( this.#radians < 0 || this.#radians > .75) this.#openRate = -this.#openRate;
+        this.#radians += this.#openRate;
     }
 
     #setVel(){
@@ -60,16 +75,16 @@ export class Jogador extends GameObject{
         }
 
         if (this.#inputHandler.keys.w.pressed && this.#inputHandler.lastkey === 'w'){
-            newVel.y = -Jogador.#speed;
+            newVel.y = -this.#speed;
             newVel.x = 0;
         } else if (this.#inputHandler.keys.s.pressed && this.#inputHandler.lastkey === 's'){
-            newVel.y = Jogador.#speed;
+            newVel.y = this.#speed;
             newVel.x = 0;
         } else if (this.#inputHandler.keys.d.pressed && this.#inputHandler.lastkey === 'd'){
-            newVel.x = Jogador.#speed;
+            newVel.x = this.#speed;
             newVel.y = 0;
         } else if (this.#inputHandler.keys.a.pressed && this.#inputHandler.lastkey === 'a'){
-            newVel.x = -Jogador.#speed;
+            newVel.x = -this.#speed;
             newVel.y = 0;   
         } else return;
 
@@ -96,6 +111,23 @@ export class Jogador extends GameObject{
                 this.velocity.x=0;
             }
         })
+    }
+
+    #ghostCollision(){
+        for(let i = fantasmas.length - 1; i >= 0; i--){
+            const fantasma = fantasmas[i];
+            // faz com que o jogo se encerre ao perder
+            if(circleCollidesWithCircle({
+                circle1: fantasma,
+                circle2: player
+            })){
+                if(fantasma.assutado){
+                    fantasmas.splice(i, 1);
+                }else{
+                    onLose();
+                }
+            }
+        }
     }
 
     #rotate(){
