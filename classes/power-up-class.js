@@ -9,12 +9,12 @@ export class PowerUp extends Coletavel{
         this.color = 'green';
         this.oncollect = () => {
             fantasmas.forEach(fantasma => {
-                fantasma.assutado = true;
-                console.log(fantasma.assutado);
+                fantasma.Assustado = true;
+                console.log(true);
 
                 setTimeout(()=>{
-                    fantasma.assutado = false;
-                    console.log(fantasma.assutado);
+                    fantasma.Assustado = false;
+                    console.log(false);
                 },5000)
             })
         }

@@ -30,13 +30,20 @@ export class Limite extends GameObject{
 
 export class Mapa{
     #limites = [];
-    get limites(){
+    get Limites(){
         return this.#limites;
     }
 
     #coletaveis = [];
-
     #bolinhaCount;
+    get BolCount(){
+        return this.#bolinhaCount;
+    }
+
+    set BolCount(value){
+        this.#bolinhaCount = value;
+    }
+
     #initialMap = [
         ['c1', '-', '-', '-', '-', '-', '-', '-', '-', '-', 'c2'],
         ['|', ' ', '.', '.', '.', '.', '.', '.', '.', '.', '|'],
@@ -118,14 +125,6 @@ export class Mapa{
                 }
             })
         })
-    }
-
-    get getBolCount(){
-        return this.#bolinhaCount;
-    }
-
-    subBolCount(){
-        this.#bolinhaCount--;
     }
     
     update(){

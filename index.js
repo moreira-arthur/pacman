@@ -17,7 +17,7 @@ globalThis.fantasmas = [
             y:Limite.height + Limite.height/2
         },
         velocity: {
-            x: Fantasma.initialSpeed,
+            x: 2,
             y:0
         }
     }),
@@ -27,7 +27,7 @@ globalThis.fantasmas = [
             y:Limite.height*3 + Limite.height/2
         },
         velocity: {
-            x: Fantasma.initialSpeed,
+            x: 2,
             y:0
         },
         color:'purple'
@@ -38,7 +38,7 @@ globalThis.fantasmas = [
             y:Limite.height*9 + Limite.height/2
         },
         velocity: {
-            x: Fantasma.initialSpeed,
+            x: 2,
             y:0
         },
         color:'white'
@@ -75,7 +75,7 @@ function animacao(){
 
     ctx.clearRect(0,0,canvas.width, canvas.height);
     
-    if(mapa.getBolCount ===  0){
+    if(mapa.BolCount ===  0){
         resultado.innerHTML = "Você Ganhou, PARABÉNS !!";
         resultado.style.color = 'green'; 
         console.log('You win');

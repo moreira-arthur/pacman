@@ -4,19 +4,19 @@ import { circleCollidesWithRectangle , circleCollidesWithCircle } from "../circl
 
 // classe que define o pacman
 export class Jogador extends GameObject{
-    static initialSpeed = 4;
-    static initialOpenRate = Jogador.initialSpeed/32;
+    static #initialSpeed = 4;
+    static #initialOpenRate = Jogador.#initialSpeed/32;
     #speed;
     #openRate;
     #radians;
     #rotation;
     #inputHandler;
 
-    get speed(){
+    get Speed(){
         return this.#speed;
     }
 
-    set speed(val){
+    set Speed(val){
         this.#speed = val;
         this.#openRate = val/32;
     }
@@ -26,8 +26,8 @@ export class Jogador extends GameObject{
             position: position
         });
         this.velocity = velocity;
-        this.#speed = Jogador.initialSpeed;
-        this.#openRate = Jogador.initialOpenRate;
+        this.#speed = Jogador.#initialSpeed;
+        this.#openRate = Jogador.#initialOpenRate;
         this.radius = 15;
         this.#radians = 0.75;
         this.#rotation = 0;
@@ -88,8 +88,8 @@ export class Jogador extends GameObject{
             newVel.y = 0;   
         } else return;
 
-        for(let i = 0; i < mapa.limites.length; i++){
-            const limite = mapa.limites[i];
+        for(let i = 0; i < mapa.Limites.length; i++){
+            const limite = mapa.Limites[i];
             if(circleCollidesWithRectangle({
                 circle: {...this,velocity:newVel},
                 rectangle: limite
@@ -101,7 +101,7 @@ export class Jogador extends GameObject{
     }
 
     #edgeCollision(){
-        mapa.limites.forEach((limite) => {
+        mapa.Limites.forEach((limite) => {
             if(circleCollidesWithRectangle({
                 circle: this,
                 rectangle: limite
@@ -121,7 +121,7 @@ export class Jogador extends GameObject{
                 circle1: fantasma,
                 circle2: player
             })){
-                if(fantasma.assutado){
+                if(fantasma.Assustado){
                     fantasmas.splice(i, 1);
                 }else{
                     onLose();
