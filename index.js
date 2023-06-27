@@ -42,6 +42,17 @@ globalThis.fantasmas = [
             y:0
         },
         color:'white'
+    }),
+    new Fantasma({
+        position:{
+            x:Limite.width*6 + Limite.width/2,
+            y:Limite.height*11 + Limite.height/2
+        },
+        velocity: {
+            x: 2,
+            y:0
+        },
+        color:'pink'
     })
 ];
 
@@ -86,9 +97,9 @@ function animacao(){
 
     player.update();
 
-    fantasmas.forEach(fantasma => {
-        fantasma.update();
-    })
+    for(let i = fantasmas.length-1; i >= 0; i--){
+        fantasmas[i].update();
+    }
 } // final da animação
 
 

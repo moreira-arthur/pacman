@@ -5,8 +5,10 @@ export class Fantasma extends GameObject{
     static #initialSpeed = 2;
     #colisoesprevias;
     #assustado;
+    #timerBonus;
     set Assustado(value){
         this.#assustado = value;
+        if(value) this.#timerBonus = 300;
     }
 
     constructor({position,velocity, color = 'red'}){
@@ -64,6 +66,9 @@ export class Fantasma extends GameObject{
             // reseta o registro de colisoes
             this.#colisoesprevias = [];
         }
+        if(this.#assustado){
+            this.#timerBonus--;
+        }
     }
 
     #playerCollision(){
@@ -75,7 +80,8 @@ export class Fantasma extends GameObject{
                 for (let index = fantasmas.length-1; index >= 0; index--) {
                     if(fantasmas[index] === this){
                         fantasmas.splice(index, 1);
-                        return;
+                        addScore(Math.floor(.5 * this.#timerBonus));
+                        break;
                     }
                 }
                 
