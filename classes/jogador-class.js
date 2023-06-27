@@ -4,7 +4,7 @@ import { circleCollidesWithRectangle, circleCollidesWithCircle } from "../circle
 
 // classe que define o pacman
 export class Jogador extends GameObject{
-    static speed = 2.5;
+    static #speed = 4;
     static #openRate = 0.12
     #radians
     #rotation
@@ -58,19 +58,19 @@ export class Jogador extends GameObject{
             x: this.velocity.x,
             y: this.velocity.y
         }
-        
+
         if (this.#inputHandler.keys.w.pressed && this.#inputHandler.lastkey === 'w'){
-            newVel.y = -5;
+            newVel.y = -Jogador.#speed;
             newVel.x = 0;
         } else if (this.#inputHandler.keys.s.pressed && this.#inputHandler.lastkey === 's'){
-            newVel.y = 5;
+            newVel.y = Jogador.#speed;
             newVel.x = 0;
         } else if (this.#inputHandler.keys.d.pressed && this.#inputHandler.lastkey === 'd'){
-            newVel.x = 5;
+            newVel.x = Jogador.#speed;
             newVel.y = 0;
         } else if (this.#inputHandler.keys.a.pressed && this.#inputHandler.lastkey === 'a'){
-            newVel.x = -5;
-            newVel.y = 0;
+            newVel.x = -Jogador.#speed;
+            newVel.y = 0;   
         } else return;
 
         for(let i = 0; i < mapa.limites.length; i++){
