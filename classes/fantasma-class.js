@@ -1,13 +1,10 @@
 import { GameObject } from "./game-obj.js";
-import { circleCollidesWithRectangle } from "../circle-collision.js";
+import { circleCollidesWithRectangle, circleCollidesWithCircle } from "../circle-collision.js";
 
 export class Fantasma extends GameObject{
     static #initialSpeed = 2;
     #colisoesprevias;
     #assustado;
-    get Assustado(){
-        return this.#assustado;
-    }
     set Assustado(value){
         this.#assustado = value;
     }
@@ -39,6 +36,8 @@ export class Fantasma extends GameObject{
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
 
+        this.#playerCollision();
+
         let colisoes = this.#getCollisions();
 
         if(colisoes.length > this.#colisoesprevias.length){
@@ -64,6 +63,25 @@ export class Fantasma extends GameObject{
 
             // reseta o registro de colisoes
             this.#colisoesprevias = [];
+        }
+    }
+
+    #playerCollision(){
+        if(circleCollidesWithCircle({
+            circle1: this,
+            circle2: player
+        })){
+            if(this.#assustado){
+                for (let index = fantasmas.length-1; index >= 0; index--) {
+                    if(fantasmas[index] === this){
+                        fantasmas.splice(index, 1);
+                        return;
+                    }
+                }
+                
+            }else{
+                onLose();
+            }
         }
     }
 

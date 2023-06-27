@@ -58,8 +58,6 @@ export class Jogador extends GameObject{
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
         this.#rotate();
-
-        this.#ghostCollision();
     }
 
     #mouthAnim(){
@@ -111,23 +109,6 @@ export class Jogador extends GameObject{
                 this.velocity.x=0;
             }
         })
-    }
-
-    #ghostCollision(){
-        for(let i = fantasmas.length - 1; i >= 0; i--){
-            const fantasma = fantasmas[i];
-            // faz com que o jogo se encerre ao perder
-            if(circleCollidesWithCircle({
-                circle1: fantasma,
-                circle2: player
-            })){
-                if(fantasma.Assustado){
-                    fantasmas.splice(i, 1);
-                }else{
-                    onLose();
-                }
-            }
-        }
     }
 
     #rotate(){
