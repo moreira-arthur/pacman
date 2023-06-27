@@ -1,6 +1,6 @@
 import { InputHandler } from "../input-handler.js";
 import { GameObject } from "./game-obj.js"
-import { circleCollidesWithRectangle, circleCollidesWithCircle } from "../circle-collision.js"
+import { circleCollidesWithRectangle } from "../circle-collision.js"
 
 // classe que define o pacman
 export class Jogador extends GameObject{
@@ -9,7 +9,7 @@ export class Jogador extends GameObject{
     #radians
     #rotation
     #inputHandler;
-    constructor({position,velocity}){
+    constructor({position,velocity = {x:0,y:0}}){
         super({
             position: position
         });

@@ -54,10 +54,6 @@ globalThis.player = new Jogador ({
     position: { 
         x:Limite.width + Limite.width/2,
         y:Limite.height + Limite.height/2
-    },
-    velocity:{
-        x:0,
-        y:0
     }
 })
 
@@ -110,7 +106,7 @@ function animacao(){
     player.update();
 
     fantasmas.forEach(fantasma => {
-        fantasma.update()
+        fantasma.update();
 
         const colisoes = [];
         mapa.limites.forEach(limite =>{

@@ -33,7 +33,7 @@ export class Mapa{
     coletaveis = [];
 
     #bolinhaCount;
-    #form = [
+    #initialMap = [
         ['c1', '-', '-', '-', '-', '-', '-', '-', '-', '-', 'c2'],
         ['|', ' ', '.', '.', '.', '.', '.', '.', '.', '.', '|'],
         ['|', '.', 'blk', '.', '[', '7', ']', '.', 'blk', '.', '|'],
@@ -70,7 +70,7 @@ export class Mapa{
 
     constructor(){
         this.#bolinhaCount = 0;
-        this.#form.forEach((row,i) =>{
+        this.#initialMap.forEach((row,i) =>{
             row.forEach((simbolo,j) =>{
                 switch(simbolo){
                     case '-':
