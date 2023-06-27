@@ -62,7 +62,7 @@ globalThis.player = new Jogador ({
 })
 
 let score = 0;
-globalThis.changeScore = (value) => {
+globalThis.addScore = (value) => {
     score += value;
     scoreEl.innerHTML = score;
 }
@@ -98,7 +98,7 @@ function animacao(){
     }
     
     // condicao de ganhar fica aqui
-    if(mapa.bolinhas.length ===  0){
+    if(mapa.getBolCount ===  0){
         resultado.innerHTML = "Você Ganhou, PARABÉNS !!";
         resultado.style.color = 'green'; 
         console.log('You win');

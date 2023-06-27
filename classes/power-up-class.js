@@ -1,31 +1,16 @@
 import { GameObject } from "./game-obj.js";
+import { Coletavel } from "./coletavel-class.js";
 import { circleCollidesWithCircle } from "../circle-collision.js";
 
-export class PowerUp extends GameObject{
+export class PowerUp extends Coletavel{
     constructor({position}){
         super({
             position: position
-        })
+        });
         this.radius = 10;
-    }
-
-    draw(){
-        ctx.beginPath();
-        ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI*2);
-        ctx.fillStyle = 'green';
-        ctx.fill();
-        ctx.closePath();
-    }
-    update(){
-        this.draw();
-        if(circleCollidesWithCircle({
-            circle1: this,
-            circle2: player
-        })){
-            let index = mapa.powerUps.indexOf(this)
-            mapa.powerUps.splice(index, 1); // retira a powerUp ao passar em cima
-            
-             //fazer os fantasmas ficarem assustados
+        this.color = 'green';
+        this.oncollect = (index) => {
+            mapa.coletaveis.splice(index, 1);
             fantasmas.forEach(fantasma => {
                 fantasma.assutado = true;
                 console.log(fantasma.assutado);
@@ -36,5 +21,6 @@ export class PowerUp extends GameObject{
                 },5000)
             })
         }
+
     }
 }

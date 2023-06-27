@@ -1,6 +1,7 @@
 import { GameObject } from "./game-obj.js";
 import { Bolinha } from "./bolinha-class.js";
 import { PowerUp } from "./power-up-class.js";
+import { Coletavel } from "./coletavel-class.js";
 
 function criarImagem(src){
     const image = new Image();
@@ -21,7 +22,7 @@ export class Limite extends GameObject{
     }
 
     draw() {
-        ctx.drawImage(this.image,this.position.x, this.position.y)
+        ctx.drawImage(this.image,this.position.x, this.position.y);
     }
     update(){
 
@@ -30,10 +31,9 @@ export class Limite extends GameObject{
 
 export class Mapa{
     limites = [];
-    bolinhas = [];
-    powerUps = [];
     coletaveis = [];
 
+    #bolinhaCount;
     #form = [
         ['c1', '-', '-', '-', '-', '-', '-', '-', '-', '-', 'c2'],
         ['|', ' ', '.', '.', '.', '.', '.', '.', '.', '.', '|'],
@@ -70,6 +70,7 @@ export class Mapa{
     }
 
     constructor(){
+        this.#bolinhaCount = 0;
         this.#form.forEach((row,i) =>{
             row.forEach((simbolo,j) =>{
                 switch(simbolo){
@@ -95,15 +96,16 @@ export class Mapa{
                         }));
                         break;
                     case '.':
-                        this.bolinhas.push(new Bolinha({
+                        this.coletaveis.push(new Bolinha({
                             position: {
                                 x: j * Limite.width + Limite.width / 2,
                                 y: i * Limite.height + Limite.height / 2
                             }
-                        }))
+                        }));
+                        this.#bolinhaCount++;
                         break;
                     case 'p':
-                        this.powerUps.push(new PowerUp({
+                        this.coletaveis.push(new PowerUp({
                             position: {
                                 x: j * Limite.width + Limite.width / 2,
                                 y: i * Limite.height + Limite.height / 2
@@ -114,18 +116,22 @@ export class Mapa{
             })
         })
     }
+
+    get getBolCount(){
+        return this.#bolinhaCount;
+    }
+
+    subBolCount(){
+        this.#bolinhaCount--;
+    }
+    
     update(){
         this.limites.forEach((limite) => {
             limite.draw();
         });
-        // Leitura ao contrário para otimizar a lista
-        for(let i = this.powerUps.length - 1; i >= 0; i--){
-            const powerUp = this.powerUps[i];
-            powerUp.update(i);
-        }
-        for(let i = this.bolinhas.length - 1; i >= 0; i--){
-            const bolinha = this.bolinhas[i];
-            bolinha.update(i);
+        for(let i = this.coletaveis.length - 1; i >= 0; i--){
+            const coletavel = this.coletaveis[i];
+            coletavel.update(i);
         }
     }
 }
