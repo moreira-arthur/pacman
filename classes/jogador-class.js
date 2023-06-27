@@ -39,16 +39,7 @@ export class Jogador extends GameObject{
         this.#mouthAnim();
 
         this.#setVel();
-        globalThis.mapa.limites.forEach((limite) => {
-            if(circleCollidesWithRectangle({
-                circle: this,
-                rectangle: limite
-            })
-            ){
-                this.velocity.y=0;
-                this.velocity.x=0;
-            }
-        })
+        this.#edgeCollision();
 
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
@@ -63,71 +54,48 @@ export class Jogador extends GameObject{
 
     #setVel(){
         // fazendo com que o player se movimente suavemente, e com colisão aos limites
+        let newVel = {
+            x: this.velocity.x,
+            y: this.velocity.y
+        }
+        
         if (this.#inputHandler.keys.w.pressed && this.#inputHandler.lastkey === 'w'){
-            for(let i = 0; i < mapa.limites.length; i++){
-                const limite = mapa.limites[i];
-                if(circleCollidesWithRectangle({
-                    circle: {...this,velocity:{
-                        x: 0,
-                        y: -5
-                    }},
-                    rectangle: limite
-                })){
-                    this.velocity.y = 0;
-                    break;
-                }else{
-                    this.velocity.y = -5;
-                }
-            }
+            newVel.y = -5;
+            newVel.x = 0;
         } else if (this.#inputHandler.keys.s.pressed && this.#inputHandler.lastkey === 's'){
-            for(let i = 0; i < mapa.limites.length; i++){
-                const limite = mapa.limites[i];
-                if(circleCollidesWithRectangle({
-                    circle: {...this,velocity:{
-                        x: 0,
-                        y: 5
-                    }},
-                    rectangle: limite
-                })){
-                    this.velocity.y = 0;
-                    break;
-                }else{
-                    this.velocity.y = 5;
-                }
-            }
+            newVel.y = 5;
+            newVel.x = 0;
         } else if (this.#inputHandler.keys.d.pressed && this.#inputHandler.lastkey === 'd'){
-            for(let i = 0; i < mapa.limites.length; i++){
-                const limite = mapa.limites[i];
-                if(circleCollidesWithRectangle({
-                    circle: {...this,velocity:{
-                        x: 5,
-                        y: 0
-                    }},
-                    rectangle: limite
-                })){
-                    this.velocity.x = 0;
-                    break;
-                }else{
-                    this.velocity.x = 5;
-                }
-            }
+            newVel.x = 5;
+            newVel.y = 0;
         } else if (this.#inputHandler.keys.a.pressed && this.#inputHandler.lastkey === 'a'){
-            for(let i = 0; i < mapa.limites.length; i++){
-                const limite = mapa.limites[i];
-                if(circleCollidesWithRectangle({
-                    circle: {...this,velocity:{
-                        x: -5,
-                        y: 0
-                    }},
-                    rectangle: limite
-                })){
-                    this.velocity.x = 0;
-                    break;
-                }else{
-                    this.velocity.x = -5;
-                }
+            newVel.x = -5;
+            newVel.y = 0;
+        } else return;
+
+        for(let i = 0; i < mapa.limites.length; i++){
+            const limite = mapa.limites[i];
+            if(circleCollidesWithRectangle({
+                circle: {...this,velocity:newVel},
+                rectangle: limite
+            })){
+                return;
             }
         }
+        this.velocity = newVel;
+    }
+
+    #edgeCollision(){
+        mapa.limites.forEach((limite) => {
+            if(circleCollidesWithRectangle({
+                circle: this,
+                rectangle: limite
+            })
+            ){
+                this.velocity.y=0;
+                this.velocity.x=0;
+            }
+        })
     }
 
     #rotate(){
