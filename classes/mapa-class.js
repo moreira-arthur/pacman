@@ -32,6 +32,7 @@ export class Mapa{
     limites = [];
     bolinhas = [];
     powerUps = [];
+    coletaveis = [];
 
     #form = [
         ['c1', '-', '-', '-', '-', '-', '-', '-', '-', '-', 'c2'],
@@ -117,11 +118,14 @@ export class Mapa{
         this.limites.forEach((limite) => {
             limite.draw();
         });
-        this.powerUps.forEach((powerUp) => {
-            powerUp.update();
-        });
-        this.bolinhas.forEach((bolinha) => {
-            bolinha.update();
-        });
+        // Leitura ao contrário para otimizar a lista
+        for(let i = this.powerUps.length - 1; i >= 0; i--){
+            const powerUp = this.powerUps[i];
+            powerUp.update(i);
+        }
+        for(let i = this.bolinhas.length - 1; i >= 0; i--){
+            const bolinha = this.bolinhas[i];
+            bolinha.update(i);
+        }
     }
 }

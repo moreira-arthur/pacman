@@ -16,14 +16,13 @@ export class Bolinha extends GameObject{
         ctx.fill();
         ctx.closePath();
     }
-    update(){
+    update(index){
         this.draw();
         if(circleCollidesWithCircle({
             circle1: this,
             circle2: player
         })){
             // console.log("Tocando");
-            let index = mapa.bolinhas.indexOf(this);
             mapa.bolinhas.splice(index, 1); // retira a bolinha ao passar em cima
             console.log(mapa.bolinhas.length)
             changeScore(10);
