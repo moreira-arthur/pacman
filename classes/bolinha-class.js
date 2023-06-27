@@ -9,7 +9,7 @@ export class Bolinha extends Coletavel{
         this.color = 'white';
         this.oncollect = () => {
             mapa.BolCount--;
-            console.log(mapa.BolCount)
+            // console.log(mapa.BolCount)
             addScore(10);
         }
     }
