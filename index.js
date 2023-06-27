@@ -1,7 +1,6 @@
 import { Mapa, Limite } from "./classes/mapa-class.js"
 import { Jogador } from "./classes/jogador-class.js"
 import { Fantasma } from "./classes/fantasma-class.js"
-import { circleCollidesWithRectangle, circleCollidesWithCircle } from "./circle-collision.js"
 
 // definindo a area de jogo
 const canvas = document.querySelector('canvas');
