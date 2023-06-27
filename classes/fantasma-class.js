@@ -27,6 +27,9 @@ export class Fantasma extends GameObject{
     update(){
         this.draw();
 
+        this.position.x += this.velocity.x;
+        this.position.y += this.velocity.y;
+
         const colisoes = [];
         mapa.limites.forEach(limite =>{
             if( !colisoes.includes('right') && circleCollidesWithRectangle({
@@ -103,17 +106,14 @@ export class Fantasma extends GameObject{
                     this.velocity.y = this.speed;
                     this.velocity.x = 0;
                     break;
-
                 case 'up':
                     this.velocity.y = -this.speed;
                     this.velocity.x = 0;
                     break;
-
                 case 'right':
                     this.velocity.y = 0;
                     this.velocity.x = this.speed;
                     break;
-
                 case 'left':
                     this.velocity.y = 0;
                     this.velocity.x = -this.speed;
@@ -122,8 +122,5 @@ export class Fantasma extends GameObject{
             // reseta o registro de colisoes
             this.colisoesprevias = [];
         }
-
-        this.position.x += this.velocity.x;
-        this.position.y += this.velocity.y;
     }
 }
