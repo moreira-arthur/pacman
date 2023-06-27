@@ -1,6 +1,4 @@
-import { GameObject } from "./game-obj.js";
 import { Coletavel } from "./coletavel-class.js";
-import { circleCollidesWithCircle } from "../circle-collision.js";
 
 export class PowerUp extends Coletavel{
     constructor({position}){

@@ -1,7 +1,6 @@
 import { GameObject } from "./game-obj.js";
 import { Bolinha } from "./bolinha-class.js";
 import { PowerUp } from "./power-up-class.js";
-import { Coletavel } from "./coletavel-class.js";
 
 function criarImagem(src){
     const image = new Image();
