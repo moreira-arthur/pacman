@@ -7,8 +7,7 @@ export class PowerUp extends Coletavel{
         });
         this.radius = 10;
         this.color = 'green';
-        this.oncollect = (index) => {
-            mapa.coletaveis.splice(index, 1);
+        this.oncollect = () => {
             fantasmas.forEach(fantasma => {
                 fantasma.assutado = true;
                 console.log(fantasma.assutado);

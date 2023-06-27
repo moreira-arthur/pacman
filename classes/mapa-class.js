@@ -30,7 +30,7 @@ export class Limite extends GameObject{
 
 export class Mapa{
     limites = [];
-    coletaveis = [];
+    #coletaveis = [];
 
     #bolinhaCount;
     #initialMap = [
@@ -95,7 +95,7 @@ export class Mapa{
                         }));
                         break;
                     case '.':
-                        this.coletaveis.push(new Bolinha({
+                        this.#coletaveis.push(new Bolinha({
                             position: {
                                 x: j * Limite.width + Limite.width / 2,
                                 y: i * Limite.height + Limite.height / 2
@@ -104,7 +104,7 @@ export class Mapa{
                         this.#bolinhaCount++;
                         break;
                     case 'p':
-                        this.coletaveis.push(new PowerUp({
+                        this.#coletaveis.push(new PowerUp({
                             position: {
                                 x: j * Limite.width + Limite.width / 2,
                                 y: i * Limite.height + Limite.height / 2
@@ -128,9 +128,13 @@ export class Mapa{
         this.limites.forEach((limite) => {
             limite.draw();
         });
-        for(let i = this.coletaveis.length - 1; i >= 0; i--){
-            const coletavel = this.coletaveis[i];
+        for(let i = this.#coletaveis.length - 1; i >= 0; i--){
+            const coletavel = this.#coletaveis[i];
             coletavel.update(i);
         }
+    }
+
+    removeCollectableOnList(index){
+        this.#coletaveis.splice(index, 1);
     }
 }

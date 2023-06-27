@@ -4,7 +4,7 @@ import { circleCollidesWithCircle } from "../circle-collision.js";
 export class Coletavel extends GameObject {
     radius;
     color;
-    oncollect = (index) => {};
+    oncollect = () => {};
 
     constructor({position}){
         super({
@@ -29,7 +29,8 @@ export class Coletavel extends GameObject {
             circle1: this,
             circle2: player
         })){
-            this.oncollect(index);
+            mapa.removeCollectableOnList(index);
+            this.oncollect();
         }
     }
 }

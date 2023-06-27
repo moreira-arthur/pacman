@@ -7,8 +7,7 @@ export class Bolinha extends Coletavel{
         })
         this.radius = 3;
         this.color = 'white';
-        this.oncollect = (index) => {
-            mapa.coletaveis.splice(index, 1); // retira a bolinha ao passar em cima
+        this.oncollect = () => {
             mapa.subBolCount();
             console.log(mapa.getBolCount)
             addScore(10);
