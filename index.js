@@ -76,7 +76,6 @@ function animacao(){
 
     ctx.clearRect(0,0,canvas.width, canvas.height);
     
-    // condicao de ganhar fica aqui
     if(mapa.getBolCount ===  0){
         resultado.innerHTML = "Você Ganhou, PARABÉNS !!";
         resultado.style.color = 'green'; 
@@ -91,7 +90,6 @@ function animacao(){
     fantasmas.forEach(fantasma => {
         fantasma.update();
     })
-
 } // final da animação
 
 
