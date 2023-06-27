@@ -29,7 +29,11 @@ export class Limite extends GameObject{
 }
 
 export class Mapa{
-    limites = [];
+    #limites = [];
+    get limites(){
+        return this.#limites;
+    }
+
     #coletaveis = [];
 
     #bolinhaCount;
@@ -89,7 +93,7 @@ export class Mapa{
                     case '6':
                     case '7':
                     case '8':
-                        this.limites.push(new Limite({
+                        this.#limites.push(new Limite({
                             position: {x: j * Limite.width,y: i * Limite.height},
                             image: criarImagem(this.#paths[simbolo])
                         }));
@@ -125,7 +129,7 @@ export class Mapa{
     }
     
     update(){
-        this.limites.forEach((limite) => {
+        this.#limites.forEach((limite) => {
             limite.draw();
         });
         for(let i = this.#coletaveis.length - 1; i >= 0; i--){

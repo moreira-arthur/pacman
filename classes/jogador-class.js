@@ -12,11 +12,11 @@ export class Jogador extends GameObject{
     #rotation;
     #inputHandler;
 
-    get getSpeed(){
+    get speed(){
         return this.#speed;
     }
 
-    set setSpeed(val){
+    set speed(val){
         this.#speed = val;
         this.#openRate = val/32;
     }
