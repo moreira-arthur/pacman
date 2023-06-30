@@ -5,8 +5,8 @@ export class PowerUp extends Coletavel{
         super({
             position: position
         });
-        this.radius = 10;
-        this.color = 'green';
+        this._radius = 10;
+        this._color = 'green';
         this.oncollect = () => {
             fantasmas.forEach(fantasma => {
                 fantasma.Assustado = true;

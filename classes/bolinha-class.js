@@ -5,8 +5,8 @@ export class Bolinha extends Coletavel{
         super({
             position: position
         })
-        this.radius = 3;
-        this.color = 'white';
+        this._radius = 3;
+        this._color = 'white';
         this.oncollect = () => {
             mapa.BolCount--;
             // console.log(mapa.BolCount)
