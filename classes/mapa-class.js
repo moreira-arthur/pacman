@@ -1,12 +1,7 @@
 import { GameObject } from "./game-obj.js";
 import { Bolinha } from "./bolinha-class.js";
 import { PowerUp } from "./power-up-class.js";
-
-function criarImagem(src){
-    const image = new Image();
-    image.src = src;
-    return image;
-}
+import { criarImagem } from "../criar-imagem.js";
 
 export class Limite extends GameObject{
     static width = 40;
