@@ -2,7 +2,7 @@ import { GameObject } from "./game-obj.js";
 import { circleCollidesWithCircle } from "../circle-collision.js";
 
 export class Coletavel extends GameObject {
-    _radius;
+    radius;
     _color;
     oncollect = () => {};
 
@@ -17,7 +17,7 @@ export class Coletavel extends GameObject {
 
     draw(){
         ctx.beginPath();
-        ctx.arc(this.position.x, this.position.y, this._radius, 0, Math.PI*2);
+        ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI*2);
         ctx.fillStyle = this._color;
         ctx.fill();
         ctx.closePath();
