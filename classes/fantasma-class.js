@@ -5,10 +5,7 @@ export class Fantasma extends GameObject{
     static #initialSpeed = 2;
     #color;
     #colisoesprevias;
-    #speed
-    set Speed(value){
-        this.#speed = value;
-    }
+    speed
 
     #assustado;
     #timerBonus = 0;
@@ -28,7 +25,7 @@ export class Fantasma extends GameObject{
 
         this.#color = color;
         this.#colisoesprevias = [];
-        this.#speed = Fantasma.#initialSpeed;
+        this.speed = Fantasma.#initialSpeed;
         this.#assustado = false;
     }
     
@@ -119,7 +116,7 @@ export class Fantasma extends GameObject{
         mapa.Limites.forEach(limite =>{
             if( !colisoes.includes('right') && circleCollidesWithRectangle({
                 circle: {...this,velocity:{
-                    x: this.#speed,
+                    x: this.speed,
                     y: 0
                     }
                 },
@@ -130,7 +127,7 @@ export class Fantasma extends GameObject{
             }
             if( !colisoes.includes('left') && circleCollidesWithRectangle({
                 circle: {...this,velocity:{
-                    x: -this.#speed,
+                    x: -this.speed,
                     y: 0
                     }
                 },
@@ -142,7 +139,7 @@ export class Fantasma extends GameObject{
             if( !colisoes.includes('up') && circleCollidesWithRectangle({
                 circle: {...this,velocity:{
                     x: 0,
-                    y: -this.#speed
+                    y: -this.speed
                     }
                 },
                 rectangle: limite
@@ -153,7 +150,7 @@ export class Fantasma extends GameObject{
             if( !colisoes.includes('down') && circleCollidesWithRectangle({
                 circle: {...this,velocity:{
                     x: 0,
-                    y: this.#speed
+                    y: this.speed
                     }
                 },
                 rectangle: limite
@@ -172,20 +169,20 @@ export class Fantasma extends GameObject{
 
         switch(direcao){
             case 'down':
-                this.velocity.y = this.#speed;
+                this.velocity.y = this.speed;
                 this.velocity.x = 0;
                 break;
             case 'up':
-                this.velocity.y = -this.#speed;
+                this.velocity.y = -this.speed;
                 this.velocity.x = 0;
                 break;
             case 'right':
                 this.velocity.y = 0;
-                this.velocity.x = this.#speed;
+                this.velocity.x = this.speed;
                 break;
             case 'left':
                 this.velocity.y = 0;
-                this.velocity.x = -this.#speed;
+                this.velocity.x = -this.speed;
                 break;
         }
     }
