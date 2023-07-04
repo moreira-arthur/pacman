@@ -85,7 +85,7 @@ function animacao(){
 
     ctx.clearRect(0,0,canvas.width, canvas.height);
     
-    if(mapa.BolCount ===  0){
+    if(mapa.bolinhaCount ===  0){
         stageManager.win();
         console.log('You win');
         cancelAnimationFrame(animacaoId);

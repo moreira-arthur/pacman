@@ -1,6 +1,7 @@
 import { Coletavel } from "./coletavel-class.js";
 
 export class PowerUp extends Coletavel{
+    static #powerdotSound = new Audio('../res/sounds/power_dot.wav');
     constructor({position}){
         super({
             position: position
@@ -8,6 +9,9 @@ export class PowerUp extends Coletavel{
         this.radius = 10;
         this._color = 'green';
         this.oncollect = () => {
+            PowerUp.#powerdotSound.muted = false;
+            PowerUp.#powerdotSound.loop = true;
+            PowerUp.#powerdotSound.play();
             fantasmas.forEach(fantasma => {
                 fantasma.Assustado = true;
                 console.log(true);
@@ -17,6 +21,7 @@ export class PowerUp extends Coletavel{
                     console.log(false);
                 },5000)
             })
+            setTimeout(() => { PowerUp.#powerdotSound.muted = true; PowerUp.#powerdotSound.loop = false; }, 5000);
         }
 
     }

@@ -2,6 +2,7 @@ import { GameObject } from "./game-obj.js";
 import { circleCollidesWithRectangle, circleCollidesWithCircle } from "../circle-collision.js";
 
 export class Fantasma extends GameObject{
+    static #eatghostSound = new Audio('../res/sounds/eat_ghost.wav');
     static #initialSpeed = 2;
     #color;
     #colisoesprevias;
@@ -100,6 +101,7 @@ export class Fantasma extends GameObject{
                     if(fantasmas[index] === this){
                         fantasmas.splice(index, 1);
                         addScore(Math.floor(this.#timerBonus));
+                        Fantasma.#eatghostSound.play(); // Melhorar aqui
                         console.log(Math.floor(this.#timerBonus));
                         break;
                     }

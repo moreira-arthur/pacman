@@ -30,14 +30,7 @@ export class Mapa{
     }
 
     #coletaveis = [];
-    #bolinhaCount;
-    get BolCount(){
-        return this.#bolinhaCount;
-    }
-
-    set BolCount(value){
-        this.#bolinhaCount = value;
-    }
+    bolinhaCount;
 
     #initialMap = [
         ['c1', '-', '-', '-', '-', '-', '-', '-', '-', '-', 'c2'],
@@ -56,26 +49,26 @@ export class Mapa{
     ];
 
     #paths = {
-        '-': './img/pipeHorizontal.png',
-        '|': './img/pipeVertical.png',
-        'c1': './img/pipeCorner1.png',
-        'c2': './img/pipeCorner2.png',
-        'c3': './img/pipeCorner3.png',
-        'c4': './img/pipeCorner4.png',
-        'blk': './img/block.png',
-        '[': './img/capLeft.png',
-        ']': './img/capRight.png',
-        '_': './img/capBottom.png',
-        '^': './img/capTop.png',
-        '+': './img/pipeCross.png',
-        '5': './img/pipeConnectorTop.png',
-        '6': './img/pipeConnectorRight.png',
-        '7': './img/pipeConnectorBottom.png',
-        '8': './img/pipeConnectorLeft.png'
+        '-': './res/img/pipeHorizontal.png',
+        '|': './res/img/pipeVertical.png',
+        'c1': './res/img/pipeCorner1.png',
+        'c2': './res/img/pipeCorner2.png',
+        'c3': './res/img/pipeCorner3.png',
+        'c4': './res/img/pipeCorner4.png',
+        'blk': './res/img/block.png',
+        '[': './res/img/capLeft.png',
+        ']': './res/img/capRight.png',
+        '_': './res/img/capBottom.png',
+        '^': './res/img/capTop.png',
+        '+': './res/img/pipeCross.png',
+        '5': './res/img/pipeConnectorTop.png',
+        '6': './res/img/pipeConnectorRight.png',
+        '7': './res/img/pipeConnectorBottom.png',
+        '8': './res/img/pipeConnectorLeft.png'
     }
 
     constructor(){
-        this.#bolinhaCount = 0;
+        this.bolinhaCount = 0;
         this.#initialMap.forEach((row,i) =>{
             row.forEach((simbolo,j) =>{
                 switch(simbolo){
@@ -107,7 +100,7 @@ export class Mapa{
                                 y: i * Limite.height + Limite.height / 2
                             }
                         }));
-                        this.#bolinhaCount++;
+                        this.bolinhaCount++;
                         break;
                     case 'p':
                         this.#coletaveis.push(new PowerUp({

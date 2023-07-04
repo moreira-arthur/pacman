@@ -1,6 +1,7 @@
 import { Coletavel } from "./coletavel-class.js";
 
 export class Bolinha extends Coletavel{
+    static #wakaSound = new Audio('../res/sounds/waka.wav');
     constructor({position}){
         super({
             position: position
@@ -8,8 +9,9 @@ export class Bolinha extends Coletavel{
         this.radius = 3;
         this._color = 'white';
         this.oncollect = () => {
-            mapa.BolCount--;
-            // console.log(mapa.BolCount)
+            mapa.bolinhaCount--;
+            let cloneWaka = Bolinha.#wakaSound.cloneNode();
+            cloneWaka.play();
             addScore(10);
         }
     }
