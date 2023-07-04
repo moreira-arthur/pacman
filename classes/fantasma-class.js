@@ -9,12 +9,9 @@ export class Fantasma extends GameObject{
     speed
 
     #assustado;
-    #timerBonus = 0;
 
     set Assustado(value){
         this.#assustado = value;
-        this.#timerBonus = value ? 150 : 0;
-        this.#setBonus();
     }
 
     constructor({position,velocity, color = 'red'}){
@@ -74,23 +71,6 @@ export class Fantasma extends GameObject{
         }
     }
 
-    #setBonus(){
-        let handle;
-        let func = () => {
-            this.#timerBonus -= 2;
-            console.log(this.#timerBonus);
-            if(!this.#assustado || this.#timerBonus <= 0){
-                window.clearInterval(handle);
-            }
-        }
-        if(this.#assustado){
-            handle = window.setInterval(func, 100);
-        }
-        else{
-            window.clearInterval(handle);
-        }
-    }
-
     #playerCollision(){
         if(circleCollidesWithCircle({
             circle1: this,
@@ -100,9 +80,13 @@ export class Fantasma extends GameObject{
                 for (let index = fantasmas.length-1; index >= 0; index--) {
                     if(fantasmas[index] === this){
                         fantasmas.splice(index, 1);
-                        addScore(Math.floor(this.#timerBonus));
+                        let points = 200 * (4-fantasmas.length)
+                        addScore(points);
+                        stageManager.displayPoints(this.position, points, 500);
+                        Fantasma.#eatghostSound.load();
                         Fantasma.#eatghostSound.play(); // Melhorar aqui
-                        console.log(Math.floor(this.#timerBonus));
+                        player.pause = true;
+                        setTimeout(() => {player.pause = false}, 500);
                         break;
                     }
                 }

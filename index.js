@@ -61,7 +61,7 @@ globalThis.player = new Jogador ({
     }
 })
 
-let stageManager = new UIManager();
+globalThis.stageManager = new UIManager();
 
 let score = 0;
 globalThis.addScore = (value) => {
@@ -92,6 +92,8 @@ function animacao(){
     }
     
     mapa.update();
+
+    stageManager.drawTemp();
 
     player.update();
 

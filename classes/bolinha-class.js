@@ -10,8 +10,10 @@ export class Bolinha extends Coletavel{
         this._color = 'white';
         this.oncollect = () => {
             mapa.bolinhaCount--;
-            let cloneWaka = Bolinha.#wakaSound.cloneNode();
-            cloneWaka.play();
+            // let cloneWaka = Bolinha.#wakaSound.cloneNode();
+            // cloneWaka.play();
+            Bolinha.#wakaSound.load();
+            Bolinha.#wakaSound.play();
             addScore(10);
         }
     }

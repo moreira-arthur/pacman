@@ -19,9 +19,9 @@ export class PowerUp extends Coletavel{
                 setTimeout(()=>{
                     fantasma.Assustado = false;
                     console.log(false);
-                },5000)
+                },10000)
             })
-            setTimeout(() => { PowerUp.#powerdotSound.muted = true; PowerUp.#powerdotSound.loop = false; }, 5000);
+            setTimeout(() => { PowerUp.#powerdotSound.muted = true; PowerUp.#powerdotSound.loop = false; }, 10000);
         }
 
     }

@@ -32,6 +32,7 @@ export class Jogador extends GameObject{
         this.#radians = 0.75;
         this.#rotation = 0;
         this.#inputHandler = new InputHandler();
+        this.pause = false;
     }
     
     draw(){
@@ -50,6 +51,7 @@ export class Jogador extends GameObject{
 
     update(){
         this.draw();
+        if(this.pause) return;
         this.#mouthAnim();
 
         this.#setVel();
