@@ -113,6 +113,7 @@ export class Mapa{
                 }
             })
         })
+        console.log("Finished loading");
     }
     
     update(){
