@@ -5,11 +5,8 @@
 
 @font-face {
     font-family: klein;
-    src: url('res/Webfonts/depixel_illegible_macroman/depixelillegible-webfont.eot');
-    src: url('res/Webfonts/depixel_illegible_macroman/depixelillegible-webfont.eot?#iefix') format('embedded-opentype'),
-         url('res/Webfonts/depixel_illegible_macroman/depixelillegible-webfont.woff2') format('woff2'),
-         url('res/Webfonts/depixel_illegible_macroman/depixelillegible-webfont.woff') format('woff'),
-         url('res/Webfonts/depixel_illegible_macroman/depixelillegible-webfont.ttf') format('truetype');
+    src: url('res/Webfonts/depixel_illegible_macroman/depixelillegible-webfont.woff2') format('woff2'),
+         url('res/Webfonts/depixel_illegible_macroman/depixelillegible-webfont.woff') format('woff')
 }
 
 body{
